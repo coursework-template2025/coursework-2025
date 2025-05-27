@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Музеи Кыргызстана{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.css' %}">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Музеи Кыргызстана</h1>
+            <nav>
+                <ul>
+                    <li style="margin-top: 15px;"><a href="{% url 'index' %}">Главная</a></li>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'profile' %}">
+                            <img src="{{ request.user.image.url }}" alt="Профиль" class="avatar">
+                        </a>
+                    </li>
+                {% else %}
+                    <li style="margin-top: 15px;"><a href="{% url 'login' %}">Войти</a></li>
+                    <li style="margin-top: 15px;"><a href="{% url 'register' %}">Регистрация</a></li>
+                {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Музеи Кыргызстана</p>
+    </footer>
+</body>
+</html>

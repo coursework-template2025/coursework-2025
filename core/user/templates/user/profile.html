@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<main>
+  <div class="profile-container">
+    <div class="profile-card">
+      <img src="{{ profile_user.image.url }}" alt="Аватар" class="profile-avatar">
+      <h2>{{ profile_user.username }}</h2>
+      <p><strong>Email:</strong> {{ profile_user.email }}</p>
+      <p><strong>Роль:</strong>
+        {% if profile_user.role == 2 %}
+          Менеджер
+        {% else %}
+          Пользователь
+        {% endif %}
+      </p>
+      <p><strong>Дата регистрации:</strong> {{ profile_user.created_date|date:"d.m.Y" }}</p>
+
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Выйти из аккаунта</button>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}

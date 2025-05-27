@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить музей{% endblock %}
+
+{% block content %}
+<main>
+    <h2>Добавить музей</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="id_title">Название:</label>
+        {{ form.title }}
+
+        <label for="id_short_description">Краткое описание:</label>
+        {{ form.short_description }}
+
+        <label for="id_description">Полное описание:</label>
+        {{ form.description }}
+
+        <label for="id_category">Категория:</label>
+        {{ form.category }}
+
+        <label for="id_image">Изображение:</label>
+        {{ form.image }}
+
+        <br><br>
+        <button type="submit" class="btn">Добавить</button>
+    </form>
+</main>
+{% endblock %}

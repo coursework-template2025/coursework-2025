@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+<h2>Музеи Кыргызстана</h2>
+
+{% if request.user.role == 2 %}
+    <a href="{% url 'museum_create' %}" class="btn">+ Добавить музей</a>
+{% endif %}
+
+<form method="get" class="filter-form">
+    <input type="text" name="q" placeholder="Поиск..." value="{{ query }}">
+    <select name="category">
+        <option value="">Все категории</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                {{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn">Поиск</button>
+</form>
+
+<div class="card-container">
+    {% for museum in museums %}
+        <div class="card">
+            <img src="{{ museum.image.url }}" alt="{{ museum.title }}">
+            <div class="card-content">
+                <h3>{{ museum.title }}</h3>
+                <p>{{ museum.short_description }}</p>
+                <a href="{% url 'museum_detail' museum.id %}" class="btn">Подробнее</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>Ничего не найдено.</p>
+    {% endfor %}
+</div>
+</main>
+{% endblock %}

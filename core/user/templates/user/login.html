@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<main>
+  <div class="form-container">
+    <h2>Вход в аккаунт</h2>
+    {% if error %}
+      <p class="form-error">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.email.label_tag }} {{ form.email }}
+      </div>
+      <div class="form-group">
+        {{ form.password.label_tag }} {{ form.password }}
+      </div>
+      <button type="submit" class="submit-btn">Войти</button>
+    </form>
+    <p style="text-align:center; margin-top:1rem;">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a></p>
+  </div>
+</main>
+{% endblock %}

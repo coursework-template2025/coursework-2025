@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ museum.title }} - Детали{% endblock %}
+
+{% block content %}
+<main>
+    <div class="museum-detail-container">
+        <h2>{{ museum.title }}</h2>
+        <div class="museum-detail">
+            <img src="{{ museum.image.url }}" alt="{{ museum.title }}">
+            <div class="museum-info">
+                <p><strong>Категория:</strong> {{ museum.category.name }}</p>
+                <p><strong>Описание:</strong></p>
+                <p>{{ museum.description }}</p>
+
+                <div class="buttons">
+                    <a href="{% url 'index' %}" class="btn">Назад к списку</a>
+                    {% if request.user.role == 2%}
+                        <button class="btn btn-edit" onclick="openModal()">Редактировать</button>
+                        <a href="{% url 'museum_delete' museum.id %}" class="btn btn-delete">Удалить</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Модальное окно -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Редактировать музей</h3>
+        <form method="post" action="{% url 'museum_update' museum.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+        
+            <label for="id_title">Название:</label>
+            {{ museum_update_form.title }}
+        
+            <label for="id_short_description">Краткое описание:</label>
+            {{ museum_update_form.short_description }}
+        
+            <label for="id_description">Полное описание:</label>
+            {{ museum_update_form.description }}
+        
+            <label for="id_category">Категория:</label>
+            {{ museum_update_form.category }}
+        
+            <label>Текущее изображение:</label><br>
+            <img src="{{ museum.image.url }}" alt="{{ museum.title }}" style="max-width: 300px; height: auto; border-radius: 4px; margin-bottom: 10px;"><br>
+        
+            <label for="id_image">Заменить изображение:</label>
+            {{ museum_update_form.image }}
+        
+            <br><br>
+            <button type="submit" class="btn btn-edit">Сохранить</button>
+        </form>
+        
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById("editModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("editModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        let modal = document.getElementById("editModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}
