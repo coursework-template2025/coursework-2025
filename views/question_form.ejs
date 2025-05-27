@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>➕ Добавить вопрос - Обучающий портал</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>🚀 Учись легко и с удовольствием!</h1>
+  </header>
+
+  <main>
+    <h2>➕ Добавить вопрос к уроку</h2>
+    <p>📘 Хорошие вопросы делают обучение интересным! Создайте вопрос, чтобы ученики могли проверить себя. 💡</p>
+
+    <form method="POST" action="/lesson/<%= lesson_id %>/question/new">
+      <label for="question_type">Тип вопроса:</label>
+      <select name="question_type" required onchange="toggleOptions(this.value)">
+        <option value="short-answer">Короткий ответ</option>
+        <option value="multiple-choice">Выбор ответа</option>
+      </select>
+
+      <label for="question_text">Вопрос:</label>
+      <textarea name="question_text" required></textarea>
+
+      <div id="options" style="display:none;">
+        <label>Варианты ответа (по одному в строке):</label>
+        <textarea name="options"></textarea>
+
+        <label>Правильные ответы (через запятую, если несколько):</label>
+        <input type="text" name="correct_answer">
+      </div>
+
+      <div id="short-answer" style="display:block;">
+        <label>Правильный ответ:</label>
+        <input type="text" name="correct_answer">
+      </div>
+
+      <label for="explanation">Пояснение:</label>
+      <textarea name="explanation"></textarea>
+
+      <button type="submit">💾 Сохранить</button>
+    </form>
+
+    <section style="margin-top: 30px;">
+      <p>✨ Ты делаешь важное дело — помогаешь другим учиться! Продолжай в том же духе! 💪</p>
+    </section>
+
+    <p><a href="/">⬅️ Назад на главную</a></p>
+  </main>
+
+  <footer>
+    <p>Спасибо, что делитесь знаниями с другими! 🌱 Вместе мы растём быстрее! 🚀</p>
+  </footer>
+
+  <script>
+    function toggleOptions(type) {
+      const multi = document.getElementById('options');
+      const short = document.getElementById('short-answer');
+      if (type === 'multiple-choice') {
+        multi.style.display = 'block';
+        short.style.display = 'none';
+      } else {
+        multi.style.display = 'none';
+        short.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

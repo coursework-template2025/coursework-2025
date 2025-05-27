@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Обучающий портал - Главная</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>🚀 Учись легко и с удовольствием! Добро пожаловать на наш обучающий портал!</h1>
+    <nav>
+      <% if (!user) { %>
+        <a href="/login">🔐 Вход</a>
+        <a href="/register">📝 Регистрация</a>
+      <% } else { %>
+        <a href="/">🏠 Главная</a>
+        <span style="color: var(--main-highlight);">👋 Привет, <%= user.username %>!</span>
+        <a href="/logout">🚪 Выход</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <div class="lesson-card">
+    <% if (!user) { %>
+      <h2>🔒 Доступ ограничен</h2>
+      <p>Чтобы увидеть уроки и начать обучение, пожалуйста, <a href="/login">войдите</a> или <a href="/register">зарегистрируйтесь</a>.</p>
+    <% } else { %>
+      <h2>📚 Наши уроки</h2>
+      <p>Выберите интересующую тему и начните обучение прямо сейчас! 🚀</p>
+
+      <form method="GET" action="/">
+        <input type="search" name="search" placeholder="Поиск урока..." value="<%= search || '' %>" />
+        <button type="submit">🔍 Найти</button>
+      </form>
+      <div class="lesson-card">
+      <a href="/lesson/new" style="padding: 12px 25px; color: white; background-color: var(--main-accent); border-radius: 8px;">➕ Создать новый урок</a>
+
+      <% if (lessons.length === 0) { %>
+        <p>Пока уроков нет. Начните первым! 🎉</p>
+      <% } else { %>
+        <ul>
+          <% lessons.forEach(lesson => { %>
+            <li><a href="/lesson/<%= lesson.id %>"><%= lesson.title %></a> — <%= lesson.description %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+    <% } %>
+    </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Спасибо, что учитесь с нами! 😊 Продолжайте в том же духе! 💪</p>
+  </footer>
+</body>
+</html>

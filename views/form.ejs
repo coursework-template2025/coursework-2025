@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= lesson && lesson.id ? 'Редактировать урок' : 'Создать новый урок' %> - Обучающий портал</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>🚀 Учись легко и с удовольствием!</h1>
+  </header>
+
+  <main>
+    <h2><%= lesson && lesson.id ? 'Редактировать урок' : 'Создать новый урок' %></h2>
+
+    <form action="<%= lesson && lesson.id ? ('/lesson/edit/' + lesson.id) : '/lesson/new' %>" method="POST">
+      <label for="title">Название урока</label><br />
+      <input type="text" id="title" name="title" required value="<%= lesson ? lesson.title : '' %>" /><br />
+
+      <label for="description">Краткое описание</label><br />
+      <textarea id="description" name="description" rows="3" required><%= lesson ? lesson.description : '' %></textarea><br />
+
+      <label for="content">Основной текст</label><br />
+      <textarea id="content" name="content" rows="10" required><%= lesson ? lesson.content : '' %></textarea><br />
+
+      <label for="video_url">Ссылка на видео (опционально)</label><br />
+      <input type="text" id="video_url" name="video_url" value="<%= lesson ? lesson.video_url : '' %>" /><br />
+
+      <label for="image_url">URL картинки урока (опционально)</label><br />
+      <input type="text" id="image_url" name="image_url" value="<%= lesson ? lesson.image_url : '' %>" /><br />
+
+      <% if (lesson && lesson.image_url) { %>
+        <p>Текущая картинка:</p>
+        <img src="<%= lesson.image_url %>" alt="Картинка урока" class="lesson-image" />
+      <% } %>
+
+      <button type="submit">💾 Сохранить</button>
+      <a href="/" style="margin-left: 15px;">🔙 Назад на главную</a>
+    </form>
+  </main>
+
+  <footer>
+    <p>Спасибо, что учитесь с нами! 😊 Продолжайте в том же духе! 💪</p>
+  </footer>
+</body>
+</html>

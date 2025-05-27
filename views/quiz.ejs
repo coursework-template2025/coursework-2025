@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>🧠 Тест: <%= lesson.title %> - Обучающий портал</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>🚀 Учись легко и с удовольствием!</h1>
+  </header>
+
+  <main>
+     <div class="lesson-card"> 
+    <p>📌 Проверь свои знания по теме и закрепи материал! Ты справишься! 💡</p>
+
+    <% questions.forEach((q, index) => { %>
+      <form action="/lesson/<%= lesson.id %>/check-answer" method="POST" style="margin-bottom: 30px;">
+        <input type="hidden" name="questionId" value="<%= q.id %>">
+        
+        <div style="margin-bottom: 10px;">
+          <p><%= index + 1 %>. <%= q.question_text %></p>
+          <input type="text" name="answer" required placeholder="Введите ответ здесь" style="padding: 8px; width: 100%; max-width: 400px;">
+        </div>
+
+        <button type="submit" style="padding: 8px 16px;">📨 Проверить</button>
+      </form>
+    <% }) %>
+
+    <section style="margin-top: 40px;">
+      <p>💪 Отличная работа! Даже если не всё получилось с первого раза — продолжай стараться! 💡 Каждый тест — шаг к успеху! 🌟</p>
+    </section>
+
+    <p style="margin-top: 20px;"><a href="/">⬅️ Назад на главную</a></p>
+    </div>  
+  </main>
+
+  <footer>
+    <p>Спасибо, что учитесь с нами! 😊 Продолжайте в том же духе! 🚀</p>
+  </footer>
+</body>
+</html>

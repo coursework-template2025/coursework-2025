@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= lesson.title %> - Обучающий портал</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>🚀 Учись легко и с удовольствием!</h1>
+    <p>📚 Добро пожаловать на обучающую платформу — здесь знания превращаются в силу!</p>
+  </header>
+
+  <main class="lesson-main">
+    <h2>📖 <%= lesson.title %></h2>
+    <br>
+    <p><strong>📝 Описание:</strong> <%= lesson.description %></p>
+    <br>
+
+    <% if (lesson.image_url) { %>
+      <img src="<%= lesson.image_url %>" alt="Картинка урока" class="lesson-image" />
+      <br><br>
+    <% } %>
+
+    <div>
+      <%= lesson.content %>
+    </div>
+    <br>
+
+    <% if (lesson.video_url) { %>
+      <div class="video-wrapper">
+        <iframe src="<%= lesson.video_url %>" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <br>
+    <% } %>
+
+    <% if (hasQuestions) { %>
+      <section>
+        <p>🌟 Отлично, что вы дошли до этого урока! Продолжайте учиться и развиваться! 💪</p>
+        <a href="/lesson/<%= lesson.id %>/answer">🧠 Перейти к вопросам</a>
+      </section>
+      <br>
+    <% } %>
+
+    <% if (!hasQuestions) { %>
+      <section style="margin-top: 20px;">
+        <a href="/lesson/<%= lesson.id %>/question/new" style="width: 200pt; display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; border-radius: 5px; text-decoration: none;">
+          ➕ Добавить вопросы
+        </a>
+      </section>
+      <br>
+    <% } %>
+    <div class="edit-buttons">
+    <p>
+            <a href="/lesson/edit/<%= lesson.id %>" style="width: 200pt; display: inline-block; padding: 10px 20px; background: #af704c; color: white; border-radius: 5px; text-decoration: none;">✏️ Редактировать урок</a>
+      <form action="/lesson/delete/<%= lesson.id %>" method="POST" class="delete-form" style="display: inline;">
+        <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот урок?');" class="delete-button">❌ Удалить урок</button>
+      </form>
+    </p>
+    </div>
+    <br>
+
+    <p><a href="/" style="width: 200pt; display: inline-block; padding: 10px 20px; background: #303030; color: white; border-radius: 20px; text-decoration: none;">⬅️ Назад на главную</a></p>
+    <br>
+  </main>
+
+  <footer>
+    <p>✨ Спасибо, что учитесь с нами! 😊 Продолжайте в том же духе! 💪</p>
+  </footer>
+</body>
+</html>

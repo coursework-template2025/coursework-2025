@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>📝 Регистрация — Обучающий портал</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header>
+    <h1>📝 Регистрация</h1>
+    <nav>
+      <a href="/">🏠 Главная</a>
+      <a href="/login">🔐 Вход</a>
+    </nav>
+  </header>
+
+  <main>
+    <% if (error) { %>
+      <p style="color:red;"><%= error %></p>
+    <% } %>
+
+    <form method="POST" action="/register">
+      <label>👤 Имя пользователя:
+        <input type="text" name="username" required />
+      </label>
+      <label>🔒 Пароль:
+        <input type="password" name="password" required />
+      </label>
+      <button type="submit">🚀 Зарегистрироваться</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>🌟 Присоединяйтесь к нам и начните своё обучение прямо сейчас!</p>
+  </footer>
+</body>
+</html>
