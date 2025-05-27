@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление статьями - Гитарный рай</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .admin-layout {
+            padding: 20px;
+        }
+        .admin-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .article-item {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+        .btn-edit {
+            background-color: #28a745;
+            color: white;
+            margin-right: 10px;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .edit-form {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/admin">Админ-панель</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tabs">Табы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/tests">Тесты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/articles">Статьи</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container admin-layout">
+        <div class="admin-card">
+            <h2>Создать новую статью</h2>
+            <form action="/admin/articles/create" method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Заголовок статьи</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Содержание статьи</label>
+                    <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Изображение (URL)</label>
+                    <input type="url" class="form-control" id="image" name="image">
+                </div>
+                <button type="submit" class="btn btn-primary">Создать статью</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h2>Существующие статьи</h2>
+            <% articles.forEach(article => { %>
+                <div class="article-item">
+                    <h4><%= article.title %></h4>
+                    <p><%= article.content.substring(0, 200) %>...</p>
+                    <% if (article.image) { %>
+                        <img src="<%= article.image %>" alt="<%= article.title %>" style="max-width: 200px; margin: 10px 0;">
+                    <% } %>
+                    <button class="btn btn-edit" onclick="showEditForm('<%= article._id %>')">Редактировать</button>
+                    <form action="/admin/articles/delete/<%= article._id %>" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Вы уверены?')">Удалить</button>
+                    </form>
+                    
+                    <div id="edit-form-<%= article._id %>" class="edit-form">
+                        <h4>Редактировать статью</h4>
+                        <form action="/admin/articles/edit/<%= article._id %>" method="POST">
+                            <div class="mb-3">
+                                <label for="edit-title-<%= article._id %>" class="form-label">Заголовок статьи</label>
+                                <input type="text" class="form-control" id="edit-title-<%= article._id %>" name="title" value="<%= article.title %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-content-<%= article._id %>" class="form-label">Содержание статьи</label>
+                                <textarea class="form-control" id="edit-content-<%= article._id %>" name="content" rows="10" required><%= article.content %></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-image-<%= article._id %>" class="form-label">Изображение (URL)</label>
+                                <input type="url" class="form-control" id="edit-image-<%= article._id %>" name="image" value="<%= article.image || '' %>">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideEditForm('<%= article._id %>')">Отмена</button>
+                        </form>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showEditForm(articleId) {
+            document.getElementById(`edit-form-${articleId}`).style.display = 'block';
+        }
+
+        function hideEditForm(articleId) {
+            document.getElementById(`edit-form-${articleId}`).style.display = 'none';
+        }
+    </script>
+</body>
+</html>

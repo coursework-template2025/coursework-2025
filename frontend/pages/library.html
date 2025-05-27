@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека аккордов</title>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/web/assets/mobirise-icons2/mobirise2.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap.min.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap-grid.min.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap-reboot.min.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/parallax/jarallax.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/dropdown/css/style.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/socicon/css/styles.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/theme/css/style.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/recaptcha.css?rnd=1740230754313">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;700&display=swap&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;700&display=swap&display=swap"></noscript>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/css/mbr-additional.css?rnd=1740230754313" type="text/css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+              Гитарный рай</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+					<li class="nav-item">
+						<a class="nav-link link text-black display-4" href="tabs.html">Табы</a>
+					</li>
+					<li class="nav-item">
+            <a class="nav-link link text-black display-4" href="library.html">Аккорды</a>
+          </li>
+					<li class="nav-item">
+						<a class="nav-link link text-black display-4" href="articles.html">Статьи</a>
+					</li>
+          <li class="nav-item"></li>
+						<a class="nav-link link text-black display-4" href="tests.html">Тесты</a>
+					</li>
+				</ul>
+				
+				<div class="navbar-buttons mbr-section-btn">
+					<a class="btn btn-primary display-4" href="#">Начать играть</a>
+				</div>
+			</div>
+        </div>
+    </nav>
+
+    <section id="chord-library" class="container mt-5">
+        <h2 class="text-center mb-4">Библиотека аккордов</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <label for="note-select">Выберите ноту:</label>
+                <select id="note-select" class="form-control">
+                    <option value="C">C</option>
+                    <option value="C#">C#</option>
+                    <option value="D">D</option>
+                    <option value="D#">D#</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="F#">F#</option>
+                    <option value="G">G</option>
+                    <option value="G#">G#</option>
+                    <option value="A">A</option>
+                    <option value="A#">A#</option>
+                    <option value="B">B</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="chord-type-select">Выберите окраску:</label>
+                <select id="chord-type-select" class="form-control">
+                    <option value="major">Major</option>
+                    <option value="minor">Minor</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="maj7">Maj7</option>
+                    <option value="m7">M7</option>
+                    <option value="sus4">sus4</option>
+                    <option value="add9">add9</option>
+                    <option value="sus2">sus2</option>
+                    <option value="7sus4">7sus4</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <h3 id="chord-display">Выберите аккорд</h3>
+            <div class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+                <img id="chord-image" src="" alt="Chord Diagram" class="img-fluid d-none" style="max-width: 300px;" />
+            </div>
+            <button id="play-chord" class="btn btn-primary mt-3" disabled>🎵 Прослушать</button>
+        </div>
+    </section>
+
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const noteSelect = document.getElementById("note-select");
+      const typeSelect = document.getElementById("chord-type-select");
+      const chordDisplay = document.getElementById("chord-display");
+      const chordImage = document.getElementById("chord-image");
+      const playButton = document.getElementById("play-chord");
+
+      function updateChord() {
+        const note = noteSelect.value;
+        const type = typeSelect.value;
+        const chordName = `${note}${type}`;
+        chordDisplay.textContent = chordName;
+
+        // Convert chord name to match file naming convention
+        const safeChordName = chordName
+          .replace("#", "s")
+          .replace("major", "major")
+          .replace("minor", "minor");
+
+        // Create all possible variations of the filename
+        const possibleFilenames = [
+          `../assets/chords/${safeChordName}.png`,                    // Cmajor.png
+          `../assets/chords/${safeChordName.replace("C", "С")}.png`,  // Сmajor.png
+          `../assets/chords/${safeChordName.toLowerCase()}.png`,      // cmajor.png
+          `../assets/chords/${safeChordName.replace("C", "С").toLowerCase()}.png` // сmajor.png
+        ];
+
+        let currentIndex = 0;
+
+        function tryNextImage() {
+          if (currentIndex < possibleFilenames.length) {
+            chordImage.src = possibleFilenames[currentIndex];
+          } else {
+            chordImage.classList.add("d-none");
+            chordDisplay.textContent = `${chordName} (изображение недоступно)`;
+          }
+        }
+
+        chordImage.onerror = function() {
+          currentIndex++;
+          tryNextImage();
+        };
+
+        chordImage.onload = function() {
+          chordImage.classList.remove("d-none");
+          chordDisplay.textContent = chordName;
+        };
+
+        // Start trying images
+        tryNextImage();
+        playButton.disabled = false;
+      }
+
+      playButton.addEventListener("click", () => {
+        const note = noteSelect.value;
+        const type = typeSelect.value;
+        const safeNote = note.replace("#", "s");
+        const audio = new Audio(`../assets/sounds/${safeNote}${type}.mp3`);
+        audio.onerror = function() {
+          alert("Аудио файл недоступен");
+        };
+        audio.play();
+      });
+
+      noteSelect.addEventListener("change", updateChord);
+      typeSelect.addEventListener("change", updateChord);
+
+      
+      updateChord();
+    });
+  </script>
+</body>
+</html>

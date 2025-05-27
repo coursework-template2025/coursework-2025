@@ -1,0 +1,7 @@
+router.get('/', async (req, res) => {
+  const articles = await Article.find();
+  res.render('articles', {
+    articles,
+    user: req.session.user // передаём текущего пользователя в шаблон
+  });
+});

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Админ-панель — Пользователи</title>
+</head>
+<body>
+  <h1>Пользователи</h1>
+  <p>Вы вошли как: <%= user.username %> (<%= user.role %>)</p>
+  <ul>
+    <% users.forEach(user => { %>
+      <li>
+        <%= user.username %> — <%= user.role %>
+        <form action="/admin/delete-user/<%= user._id %>" method="POST" style="display:inline;">
+          <button type="submit">Удалить</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+
+  <hr>
+  <a href="/admin/articles">Статьи</a> |
+  <a href="/admin/tabs">Табы</a> |
+  <a href="/admin/tests">Тесты</a> |
+  <a href="/logout">Выйти</a>
+</body>
+</html>

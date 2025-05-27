@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Табы - Гитарный рай</title>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap.min.css">
+    <style>
+        .tabs-layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            gap: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .sidebar h4, .sidebar h5 {
+            color: #ff9100;
+            margin-bottom: 15px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar li {
+            margin: 10px 0;
+        }
+        .sidebar a {
+            color: #333;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            color: #ff9100;
+        }
+        #tab-viewer {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .play-btn {
+            background: #ff9100;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+        .play-btn:hover {
+            background: #e68200;
+        }
+        .volume, .speed {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #progress {
+            width: 100%;
+            height: 5px;
+            background: #ddd;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #progress-bar {
+            height: 100%;
+            background: #ff9100;
+            border-radius: 2px;
+            width: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">Гитарный рай</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tabs">Табы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/library">Аккорды</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/articles">Статьи</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tests">Тесты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="tabs-layout">
+        <aside class="sidebar">
+            <h4>Исполнители</h4>
+            <ul id="artist-list">
+                <% if (tabs && tabs.length > 0) { %>
+                    <% const artists = [...new Set(tabs.map(tab => tab.artist))]; %>
+                    <% artists.forEach(artist => { %>
+                        <li><a href="#" onclick="showSongs('<%= artist %>')"><%= artist %></a></li>
+                    <% }); %>
+                <% } %>
+            </ul>
+            <h5>Песни</h5>
+            <ul id="song-list">
+                <!-- сюда вставляются песни -->
+            </ul>
+        </aside>
+        <div class="content">
+            <h2 id="tab-title">Выберите песню</h2>
+            <iframe id="tab-viewer" src=""></iframe>
+            <div class="player-controls">
+                <button id="play-pause" class="play-btn">▶️ Включить</button>
+                <div class="volume">
+                    <label for="volume-slider">Громкость</label>
+                    <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="1" />
+                </div>
+                <div class="speed">
+                    <label for="speed-select">Скорость</label>
+                    <select id="speed-select">
+                        <option value="0.25">0.25x</option>
+                        <option value="0.5">0.5x</option>
+                        <option value="1" selected>1x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2">2x</option>
+                    </select>
+                </div>
+            </div>
+            <div id="progress" onclick="seekAudio(event)">
+                <div id="progress-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Преобразуем данные из сервера в правильный формат
+        const tabsData = <%- JSON.stringify(tabs) %>;
+        const tabs = {};
+        
+        // Группируем табы по исполнителям
+        tabsData.forEach(tab => {
+            if (!tabs[tab.artist]) {
+                tabs[tab.artist] = [];
+            }
+            // Проверяем, что file и audio существуют и являются строками
+            const filePath = typeof tab.file === 'string' ? `/assets/tabs/${tab.file}` : '';
+            const audioPath = typeof tab.audio === 'string' ? `/assets/audio/${tab.audio}` : '';
+            
+            tabs[tab.artist].push({
+                title: tab.title,
+                file: filePath,
+                audio: audioPath,
+                video: tab.video || ''
+            });
+        });
+
+        let currentAudio = null;
+
+        function showSongs(artist) {
+            const list = document.getElementById('song-list');
+            list.innerHTML = '';
+            if (tabs[artist]) {
+                tabs[artist].forEach((song, index) => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = '#';
+                    a.textContent = song.title;
+                    a.onclick = () => loadTab(artist, index);
+                    li.appendChild(a);
+                    list.appendChild(li);
+                });
+            }
+        }
+
+        function loadTab(artist, index) {
+            const song = tabs[artist][index];
+            document.getElementById('tab-title').textContent = song.title;
+            
+            // Загружаем PDF
+            const viewer = document.getElementById('tab-viewer');
+            if (song.file) {
+                viewer.src = song.file;
+            } else {
+                viewer.src = ''; // Очищаем viewer, если файл не найден
+                console.error('PDF file not found for:', song.title);
+            }
+            
+            const audioBtn = document.getElementById('play-pause');
+            audioBtn.disabled = !song.audio;
+
+            if (song.audio) {
+                if (currentAudio) {
+                    currentAudio.pause();
+                }
+                currentAudio = new Audio(song.audio);
+                currentAudio.volume = document.getElementById('volume-slider').value;
+                currentAudio.playbackRate = document.getElementById('speed-select').value;
+                audioBtn.textContent = '⏸️ Пауза';
+                audioBtn.onclick = () => {
+                    if (currentAudio.paused) {
+                        currentAudio.play();
+                        audioBtn.textContent = '⏸️ Пауза';
+                    } else {
+                        currentAudio.pause();
+                        audioBtn.textContent = '▶️ Включить';
+                    }
+                };
+
+                currentAudio.ontimeupdate = updateProgress;
+            } else {
+                audioBtn.disabled = true;
+                console.error('Audio file not found for:', song.title);
+            }
+        }
+
+        // Обработчик изменения громкости
+        document.getElementById('volume-slider').addEventListener('input', function() {
+            if (currentAudio) {
+                currentAudio.volume = this.value;
+            }
+        });
+
+        // Обработчик изменения скорости
+        document.getElementById('speed-select').addEventListener('change', function() {
+            if (currentAudio) {
+                currentAudio.playbackRate = this.value;
+            }
+        });
+
+        // Обновление прогресса
+        function updateProgress() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Перемотка аудио
+        function seekAudio(event) {
+            if (!currentAudio) return;
+            const progress = document.getElementById('progress');
+            const offsetX = event.offsetX;
+            const totalWidth = progress.offsetWidth;
+            const newTime = (offsetX / totalWidth) * currentAudio.duration;
+            currentAudio.currentTime = newTime;
+        }
+    </script>
+</body>
+</html> 

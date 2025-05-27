@@ -1,0 +1,19 @@
+<h1>Админ-панель</h1>
+<table border="1">
+  <tr>
+    <th>Email</th>
+    <th>Роль</th>
+    <th>Действие</th>
+  </tr>
+  <% users.forEach(user => { %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= user.role %></td>
+      <td>
+        <form method="POST" action="/admin/delete/<%= user._id %>">
+          <button type="submit">Удалить</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+</table>

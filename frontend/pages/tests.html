@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="https://r.mobirisesite.com/1228292/assets/images/photo-1525201548942-d8732f6617a0.jpeg" type="image/x-icon">
+  <meta name="description" content="Гитаристы найдут полезные табы, аккорды и статьи для улучшения навыков. Тесты помогут запомнить аккорды быстрее.">
+  <title>Тесты</title>
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/web/assets/mobirise-icons2/mobirise2.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap.min.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap-grid.min.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap-reboot.min.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/parallax/jarallax.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/dropdown/css/style.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/socicon/css/styles.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/theme/css/style.css?rnd=1740230754313">
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/recaptcha.css?rnd=1740230754313">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;700&display=swap&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;700&display=swap&display=swap"></noscript>
+  <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/css/mbr-additional.css?rnd=1740230754313" type="text/css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Roboto Flex', sans-serif;
+      background-color: #f4f7fa;
+    }
+  
+    .sidebar {
+      width: 250px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+  
+    .sidebar h4 {
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+  
+    .sidebar a {
+      display: block;
+      margin-bottom: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+      background-color: #f0f0f0;
+    }
+  
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #ffaa00;
+      color: white;
+    }
+  
+    .main-content {
+      flex-grow: 1;
+      padding: 40px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      margin-left: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      animation: fadeIn 0.3s ease;
+    }
+  
+    h1#quiz-title {
+      margin-bottom: 30px;
+      font-weight: 700;
+      color: #212529;
+    }
+  
+    .question {
+      background-color: #f9f9f9;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+  
+    .question:hover {
+      transform: scale(1.01);
+    }
+  
+    .question p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+  
+    .question label {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+  
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #28a745;
+      font-weight: bold;
+    }
+  
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    #progress-bar {
+    transition: width 0.3s ease-in-out;
+  }
+  </style>
+  
+</head>
+<body>
+ <!-- Навигация -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+      <a class="navbar-brand" href="index.html">Гитарный рай</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+              <li class="nav-item">
+                  <a class="nav-link link text-black display-4" href="tabs.html">Табы</a>
+              </li>
+              <li class="nav-item">
+      <a class="nav-link link text-black display-4" href="library.html">Аккорды</a>
+    </li>
+              <li class="nav-item">
+                  <a class="nav-link link text-black display-4" href="articles.html">Статьи</a>
+              </li>
+    <li class="nav-item"></li>
+                  <a class="nav-link link text-black display-4" href="tests.html">Тесты</a>
+              </li>
+          </ul>
+          
+          <div class="navbar-buttons mbr-section-btn">
+              <a class="btn btn-primary display-4" href="#">Начать играть</a>
+          </div>
+      </div>
+  </div>
+</nav>
+
+  <div class="d-flex w-100" style="padding-top: 80px;">
+    <aside class="sidebar">
+      <h4>Темы</h4>
+      <a href="#" onclick="startQuiz('chords')" role="button">Аккорды</a>
+      <a href="#" onclick="startQuiz('general')">Общие знания</a>
+      <a href="#" onclick="startQuiz('guitarTheory')">Теория гитары</a>
+      <a href="#" onclick="startQuiz('guitarTechniques')">Техники гитары</a>
+      <a href="#" onclick="startQuiz('guitarHistory')">История гитары</a>
+    </aside>
+    <main class="main-content">
+      <h1 id="quiz-title">Выберите тему теста</h1>
+      
+      <!-- Прогресс-бар -->
+      <div id="progress-bar-container" style="margin-top: 30px;">
+        <label for="progress-bar">Прогресс:</label>
+        <div class="progress">
+          <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    
+      <!-- Контейнер для вопросов -->
+      <div id="quiz-container"></div>
+    
+      <!-- Результаты теста -->
+      <div id="result" class="result"></div>
+    </main>
+    
+  </div>
+
+  <script>
+    const quizzes = {
+      chords: {
+        title: "Тест: Аккорды",
+        questions: [
+          {
+            question: "Какой аккорд обозначает 'Am'?",
+            options: ["A мажор", "A минор", "A7"],
+            correct: 1
+          },
+          {
+            question: "Какой аккорд состоит из нот C-E-G?",
+            options: ["C minor", "C major", "C7"],
+            correct: 1
+          },
+          {
+            question: "Какой аккорд включает ноты F-A-C?",
+            options: ["F major", "F minor", "F7"],
+            correct: 0
+          },
+          {
+            question: "Какой аккорд имеет форму C-E-G-B?",
+            options: ["C major 7", "C minor", "C6"],
+            correct: 0
+          }
+        ]
+      },
+      general: {
+        title: "Тест: Общие знания",
+        questions: [
+          {
+            question: "Сколько струн у стандартной гитары?",
+            options: ["4", "6", "12"],
+            correct: 1
+          },
+          {
+            question: "Какой строй у стандартной гитары?",
+            options: ["EADGBE", "DADGAD", "CGDAEB"],
+            correct: 0
+          },
+          {
+            question: "Кто является изобретателем гитары?",
+            options: ["Андреас Сеговио", "Леонардо да Винчи", "Антонио Торрез"],
+            correct: 2
+          },
+          {
+            question: "Какой музыкальный стиль ассоциируется с гитарой?",
+            options: ["Рок", "Техно", "Джаз"],
+            correct: 0
+          }
+        ]
+      },
+      guitarTheory: {
+        title: "Тест: Теория гитары",
+        questions: [
+          {
+            question: "Что такое интервал в музыке?",
+            options: ["Расстояние между нотами", "Тип аккорда", "Особенность настроек гитары"],
+            correct: 0
+          },
+          {
+            question: "Что такое лада?",
+            options: ["Группа аккордов", "Строй гитары", "Система организации нот в музыке"],
+            correct: 2
+          },
+          {
+            question: "Какая из этих нот является тоникой в тональности C мажор?",
+            options: ["C", "D", "G"],
+            correct: 0
+          },
+          {
+            question: "Что такое септаккорд?",
+            options: ["Аккорд, включающий семь нот", "Аккорд, состоящий из трех нот", "Аккорд с добавлением седьмой ноты"],
+            correct: 2
+          }
+        ]
+      },
+      guitarTechniques: {
+        title: "Тест: Техники игры на гитаре",
+        questions: [
+          {
+            question: "Как называется техника, при которой ноты извлекаются с помощью пальца правой руки?",
+            options: ["Пиццикато", "Пальцевый стиль", "Слайды"],
+            correct: 1
+          },
+          {
+            question: "Что такое бендинг?",
+            options: ["Извлечение звука с использованием пальцев", "Подтягивание струны вверх или вниз", "Извлечение нескольких нот одновременно"],
+            correct: 1
+          },
+          {
+            question: "Как называется техника, когда гитарист извлекает звук с помощью медиатора, быстро меняя его направление?",
+            options: ["Дроп-два", "Скрэтч", "Тремоло"],
+            correct: 2
+          },
+          {
+            question: "Что такое хэммер-он?",
+            options: ["Техника игры с использованием слайдов", "Техника, при которой нота извлекается ударом по струне", "Техника, при которой один палец ставится на ноту, а затем другой добавляется без удара"],
+            correct: 2
+          }
+        ]
+      },
+      guitarHistory: {
+        title: "Тест: История гитары",
+        questions: [
+          {
+            question: "Когда был создан первый электрогитарный усилитель?",
+            options: ["1920-е", "1930-е", "1950-е"],
+            correct: 1
+          },
+          {
+            question: "Как назывался первый электрогитарный бренд?",
+            options: ["Fender", "Gibson", "Rickenbacker"],
+            correct: 2
+          },
+          {
+            question: "Когда были созданы первые семиструнные гитары?",
+            options: ["16 век", "18 век", "20 век"],
+            correct: 0
+          },
+          {
+            question: "Какая эпоха считается расцветом популярности рок-гитары?",
+            options: ["60-70-е годы", "80-е годы", "90-е годы"],
+            correct: 0
+          }
+        ]
+      }
+    };
+  
+    let currentQuiz = null;
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz(key) {
+  currentQuiz = quizzes[key];
+  currentQuestionIndex = 0;
+  score = 0;
+  document.getElementById('quiz-title').textContent = currentQuiz.title;
+  document.getElementById('result').textContent = '';
+  document.getElementById('progress-bar').style.width = '0%';
+  showQuestion();
+  setActiveLink(key);
+}
+
+function showQuestion() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  const q = currentQuiz.questions[currentQuestionIndex];
+
+  const div = document.createElement('div');
+  div.className = 'question';
+
+  const p = document.createElement('p');
+  p.innerHTML = `<strong>${currentQuestionIndex + 1}. ${q.question}</strong>`;
+  div.appendChild(p);
+
+  q.options.forEach((opt, i) => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="radio" name="answer" value="${i}"> ${opt}`;
+    div.appendChild(label);
+    div.appendChild(document.createElement('br'));
+  });
+
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-primary mt-3';
+  btn.textContent = currentQuestionIndex < currentQuiz.questions.length - 1 ? 'Далее' : 'Завершить';
+  btn.onclick = nextQuestion;
+  div.appendChild(btn);
+
+  container.appendChild(div);
+
+  updateProgress();
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('input[name="answer"]:checked');
+  if (!selected) return alert("Выберите ответ");
+
+  const answer = parseInt(selected.value);
+  if (answer === currentQuiz.questions[currentQuestionIndex].correct) {
+    score++;
+  }
+
+  currentQuestionIndex++;
+  if (currentQuestionIndex < currentQuiz.questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-container').innerHTML = '';
+  document.getElementById('result').textContent = `Вы набрали ${score} из ${currentQuiz.questions.length} баллов.`;
+
+  // Найдем индекс текущего теста
+  const currentIndex = Object.keys(quizzes).indexOf(currentQuiz.title.toLowerCase().split(':')[0]);
+
+  // Если есть следующий тест, добавляем кнопку для его начала
+  if (currentIndex < Object.keys(quizzes).length - 1) {
+    const nextQuizKey = Object.keys(quizzes)[currentIndex + 1];
+    const nextQuizButton = document.createElement('button');
+    nextQuizButton.className = 'btn btn-success mt-3';
+    nextQuizButton.textContent = 'Начать новый тест';
+    nextQuizButton.onclick = () => {
+      document.getElementById('result').textContent = '';
+      startQuiz(nextQuizKey); // Переход к следующему тесту
+    };
+
+    document.getElementById('quiz-container').appendChild(nextQuizButton);
+  }
+}
+
+function updateProgress() {
+  const progress = (currentQuestionIndex + 1) / currentQuiz.questions.length * 100;
+  document.getElementById('progress-bar').style.width = `${progress}%`;
+}
+
+function setActiveLink(key) {
+  document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+  const activeLink = Array.from(document.querySelectorAll('.sidebar a')).find(link => link.textContent.includes(quizzes[key].title.split(':')[1].trim()));
+  if (activeLink) activeLink.classList.add('active');
+}
+
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Гитарный рай</title>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap.min.css">
+    <style>
+        .admin-layout {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .admin-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .admin-card h2 {
+            color: #ff9100;
+            margin-bottom: 20px;
+        }
+        .admin-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .admin-link {
+            display: block;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .admin-link:hover {
+            background: #ff9100;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">Гитарный рай</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-layout">
+        <div class="admin-card">
+            <h2>Панель управления</h2>
+            <p>Добро пожаловать, <%= user.username %>!</p>
+            
+            <div class="admin-links">
+                <a href="/admin/tabs" class="admin-link">
+                    <h3>Табы</h3>
+                    <p>Управление табами и нотами</p>
+                </a>
+                <a href="/admin/tests" class="admin-link">
+                    <h3>Тесты</h3>
+                    <p>Управление тестами</p>
+                </a>
+                <a href="/admin/articles" class="admin-link">
+                    <h3>Статьи</h3>
+                    <p>Управление статьями</p>
+                </a>
+                <a href="/admin" class="admin-link">
+                    <h3>Пользователи</h3>
+                    <p>Управление пользователями</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

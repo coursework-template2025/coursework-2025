@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="https://r.mobirisesite.com/1228292/assets/images/photo-1525201548942-d8732f6617a0.jpeg" type="image/x-icon">
+    <meta name="description" content="Гитаристы найдут полезные табы, аккорды и статьи для улучшения навыков. Тесты помогут запомнить аккорды быстрее.">
+    <title>Табы</title>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/web/assets/mobirise-icons2/mobirise2.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap.min.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap-grid.min.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/bootstrap/css/bootstrap-reboot.min.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/parallax/jarallax.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/dropdown/css/style.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/socicon/css/styles.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/theme/css/style.css?rnd=1740230754313">
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/recaptcha.css?rnd=1740230754313">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;700&display=swap&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;700&display=swap&display=swap"></noscript>
+    <link rel="stylesheet" href="https://r.mobirisesite.com/1228292/assets/css/mbr-additional.css?rnd=1740230754313" type="text/css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      .tabs-layout {
+        display: flex;
+        flex-direction: row;
+        padding: 40px;
+        gap: 40px;
+      }
+      .sidebar {
+        width: 250px;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      .sidebar li {
+        margin-bottom: 10px;
+      }
+      .sidebar a {
+        display: block;
+        padding: 8px;
+        background: #f1f1f1;
+        text-decoration: none;
+        border-radius: 4px;
+        color: #333;
+      }
+      .sidebar a:hover {
+        background: #ddd;
+      }
+      .content {
+        flex-grow: 1;
+      }
+      iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+      }
+      .player-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .player-controls .volume {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .player-controls .speed {
+        margin-left: 20px;
+      }
+      .player-controls .speed select {
+        padding: 5px;
+      }
+      .player-controls .play-btn {
+        padding: 5px 15px;
+        cursor: pointer;
+      }
+      #progress {
+        width: 100%;
+        height: 5px;
+        background: #ddd;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+      #progress-bar {
+        height: 100%;
+        background: #4caf50;
+        width: 0;
+      }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">Гитарный рай</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="tabs.html">Табы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="library.html">Аккорды</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link text-black display-4" href="articles.html">Статьи</a>
+                </li>
+      <li class="nav-item"></li>
+                    <a class="nav-link link text-black display-4" href="tests.html">Тесты</a>
+                </li>
+            </ul>
+            
+            <div class="navbar-buttons mbr-section-btn">
+                <a class="btn btn-primary display-4" href="#">Начать играть</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+  <section class="tabs-layout">
+    <aside class="sidebar">
+      <h4>Исполнители</h4>
+      <ul id="artist-list">
+        <li><a href="#" onclick="showSongs('nirvana')">Nirvana</a></li>
+        <li><a href="#" onclick="showSongs('metallica')">Metallica</a></li>
+        <li><a href="#" onclick="showSongs('acoustic')">Акустика</a></li>
+      </ul>
+      <h5>Песни</h5>
+      <ul id="song-list">
+        <!-- сюда вставляются песни -->
+      </ul>
+    </aside>
+    <div class="content">
+      <h2 id="tab-title">Выберите песню</h2>
+      <iframe id="tab-viewer" src=""></iframe>
+      <div class="player-controls">
+        <button id="play-pause" class="play-btn">▶️ Включить</button>
+        <div class="volume">
+          <label for="volume-slider">Громкость</label>
+          <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="1" />
+        </div>
+        <div class="speed">
+          <label for="speed-select">Скорость</label>
+          <select id="speed-select">
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Ползунок прогресса -->
+      <div id="progress" onclick="seekAudio(event)">
+        <div id="progress-bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const tabs = {
+  nirvana: [
+    {
+      title: "Smells Like Teen Spirit",
+      file: "assets/tabs/nirvana-spirit.pdf",
+      audio: "assets/audio/nirvana-spirit.mp3",
+      video: "https://youtu.be/hTWKbfoikeg"
+    },
+    {
+      title: "Come As You Are",
+      file: "assets/tabs/nirvana-come.pdf",
+      audio: "assets/audio/Nirvana - Come As You Are.mp3",
+      video: "https://www.youtube.com/watch?v=vabnZ9-ex7o"
+    }
+  ],
+  metallica: [
+    {
+      title: "Nothing Else Matters",
+      file: "assets/tabs/metallica-nem.pdf",
+      audio: "assets/audio/Metallica - Nothing Else Matters.mp3",
+      video: "https://youtu.be/tAGnKpE4NCI"
+    }
+  ],
+  acoustic: [
+    {
+      title: "Романс Гомеса часть 1",
+      file: "assets/tabs/rgomes.pdf",
+      audio: "assets/audio/rgomes.mp3",
+      video: ""
+    }
+  ]
+};
+
+
+    let currentAudio = null;
+
+    function showSongs(artist) {
+      const list = document.getElementById('song-list');
+      list.innerHTML = '';
+      tabs[artist].forEach((song, index) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = song.title;
+        a.onclick = () => loadTab(artist, index);
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+
+    function loadTab(artist, index) {
+      const song = tabs[artist][index];
+      document.getElementById('tab-title').textContent = song.title;
+      document.getElementById('tab-viewer').src = song.file;
+      const audioBtn = document.getElementById('play-pause');
+      const videoLink = document.getElementById('open-video');
+
+      if (song.audio) {
+        if (currentAudio) {
+          currentAudio.pause();
+        }
+        currentAudio = new Audio(song.audio);
+        currentAudio.volume = document.getElementById('volume-slider').value;
+        currentAudio.playbackRate = document.getElementById('speed-select').value;
+        audioBtn.textContent = '⏸️ Пауза';
+        audioBtn.onclick = () => {
+          if (currentAudio.paused) {
+            currentAudio.play();
+            audioBtn.textContent = '⏸️ Пауза';
+          } else {
+            currentAudio.pause();
+            audioBtn.textContent = '▶️ Включить';
+          }
+        };
+
+        currentAudio.ontimeupdate = updateProgress;
+      } else {
+        audioBtn.disabled = true;
+      }
+
+      if (song.video) {
+        videoLink.href = song.video;
+        videoLink.style.display = 'inline-block';
+      } else {
+        videoLink.style.display = 'none';
+      }
+    }
+
+    // Обработчик изменения громкости
+    document.getElementById('volume-slider').addEventListener('input', function() {
+      if (currentAudio) {
+        currentAudio.volume = this.value;
+      }
+    });
+
+    // Обработчик изменения скорости
+    document.getElementById('speed-select').addEventListener('change', function() {
+      if (currentAudio) {
+        currentAudio.playbackRate = this.value;
+      }
+    });
+
+    // Обновление прогресса
+    function updateProgress() {
+      const progressBar = document.getElementById('progress-bar');
+      const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    // Перемотка аудио
+    function seekAudio(event) {
+      const progress = document.getElementById('progress');
+      const offsetX = event.offsetX;
+      const totalWidth = progress.offsetWidth;
+      const newTime = (offsetX / totalWidth) * currentAudio.duration;
+      currentAudio.currentTime = newTime;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Статьи</title>
+</head>
+<body>
+  <h1>Статьи</h1>
+
+  <% articles.forEach(article => { %>
+    <article>
+      <h2><%= article.title %></h2>
+      <p><%= article.content %></p>
+      <small>Автор: <%= article.author %>, дата: <%= article.date.toLocaleDateString() %></small>
+    </article>
+    <hr>
+  <% }) %>
+
+  <a href="/">На главную</a>
+</body>
+</html>
