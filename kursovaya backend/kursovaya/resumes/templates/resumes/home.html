@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0051a8;
+            --primary-hover: #003f87;
+            --danger-color: #d32f2f;
+            --danger-hover: #b71c1c;
+            --success-bg: #e8f5e9;
+            --warning-bg: #fff4e5;
+            --warning-border: #ff9800;
+            --neutral-bg: #eceff1;
+            --text-color: #1a1a1a;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hamburger-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 260px;
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary-color) 0%, #004080 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 10px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .hamburger-menu.open {
+            left: 0;
+        }
+
+        .hamburger-menu h2 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 20px 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            margin: 0 10px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .nav-item[aria-current="page"] {
+            background-color: var(--primary-hover);
+            border-left: 4px solid #fff;
+        }
+
+        .nav-item:hover {
+            background-color: var(--primary-hover);
+            transform: translateX(5px);
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .toggle-menu {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 26px;
+            padding: 10px;
+            cursor: pointer;
+            position: fixed;
+            top: 10px;
+            left: -5px;
+            z-index: 1100;
+            transition: color 0.2s;
+        }
+
+        .toggle-menu:hover {
+            color: var(--primary-hover);
+        }
+
+        .main-content {
+            padding: 30px;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+        }
+
+        .content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .content-wrapper > *:not(:last-child) {
+            margin-bottom: 30px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary-color);
+        }
+
+        .logout-button {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .logout-button:hover {
+            background-color: var(--danger-hover);
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-block {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background-color: var(--success-bg);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-item i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary-hover);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 10px 0;
+            font-size: 16px;
+        }
+
+        .progress-bar-container {
+            background-color: var(--neutral-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 100%;
+            height: 28px;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color) 0%, #007bff 100%);
+            height: 100%;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            transition: width 1.2s ease-in-out;
+        }
+
+        .progress-bar-container:hover .progress-bar {
+            filter: brightness(1.15);
+        }
+
+        .missing-fields, .all-fields-filled {
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 100%;
+        }
+
+        .missing-fields {
+            background-color: var(--warning-bg);
+            border-left: 6px solid var(--warning-border);
+        }
+
+        .missing-fields li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .all-fields-filled {
+            background-color: var(--success-bg);
+            border-left: 6px solid #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                width: 80%;
+                max-width: 300px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-bar-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-menu" onclick="toggleMenu()" aria-label="Переключить меню">
+        <i class="bi bi-list" aria-hidden="true" id="menu-icon"></i>
+    </button>
+    <div class="hamburger-menu" id="hamburger-menu" role="navigation" aria-label="Основное меню">
+        <h2><i class="bi bi-file-earmark-person" aria-hidden="true"></i> МЕНЮ</h2>
+        <a href="{% url 'resume_list' %}" class="nav-item" aria-current="{% if request.resolver_match.url_name == 'resume_list' %}page{% endif %}">
+            <i class="bi bi-card-list" aria-hidden="true"></i> Список резюме
+        </a>
+        <a href="{% url 'resume_create' %}" class="nav-item">
+            <i class="bi bi-file-earmark-plus" aria-hidden="true"></i> Создать резюме
+        </a>
+        <a href="{% url 'logout' %}" class="nav-item">
+            <i class="bi bi-box-arrow-right" aria-hidden="true"></i> Выйти
+        </a>
+    </div>
+    <div class="main-content">
+        <div class="content-wrapper">
+            <header>
+                <h1><i class="bi bi-file-earmark-person" aria-hidden="true"></i> Добро пожаловать, {{ request.user.username }}!</h1>
+                <a href="{% url 'logout' %}" class="logout-button">Выйти</a>
+            </header>
+
+            <h2><i class="bi bi-clock-history" aria-hidden="true"></i> Последние резюме</h2>
+            <ul>
+                {% for resume in recent_resumes %}
+                    <li><a href="{% url 'resume_detail' pk=resume.pk %}">{{ resume.full_name }}</a></li>
+                {% empty %}
+                    <li>Резюме пока нет.</li>
+                {% endfor %}
+            </ul>
+            <div class="stat-block">
+                <h2><i class="bi bi-bar-chart-line" aria-hidden="true"></i> Статистика</h2>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <span>Всего резюме: {{ total_resumes }}</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="bi bi-envelope"></i>
+                        <span>Ваш email: {{ request.user.email }}</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 id="progress-label"><i class="bi bi-check-circle" aria-hidden="true"></i> Прогресс заполнения резюме</h2>
+                <div class="progress-bar-container" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" aria-labelledby="progress-label" title="Заполнено {{ progress }}% полей резюме">
+                    <div class="progress-bar" style="width: {{ progress }}%;">{{ progress }}%</div>
+                </div>
+            </div>
+            <div>
+                <h2><i class="bi bi-exclamation-triangle" aria-hidden="true"></i> Отсутствующие поля</h2>
+                {% if missing_fields %}
+                    <ul class="missing-fields">
+                        {% for field in missing_fields %}
+                            <li><i class="bi bi-x-circle" aria-hidden="true"></i> {{ field }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="all-fields-filled">
+                        <i class="bi bi-check-circle-fill" aria-hidden="true"></i> Все поля заполнены!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('hamburger-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('open');
+            icon.classList.toggle('bi-list');
+            icon.classList.toggle('bi-x');
+        }
+    </script>
+</body>
+</html>
