@@ -1,0 +1,532 @@
+{
+  "teachers": [
+    {
+      "id": 1,
+      "name": "Жамиля Кияшева",
+      "photo": "/img/teachers/32.jpg",
+      "rating": 5
+    },
+    {
+      "id": 2,
+      "name": "Алексей Петров",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "name": "Чоршанбэ Чоршанбиев",
+      "photo": "/img/teachers/damir.jpg",
+      "rating": 5
+    },
+    {
+      "id": 4,
+      "name": "Иван Козлов",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 5,
+      "name": "Айдана Кенжибаева",
+      "photo": "/img/teachers/aika.jpg",
+      "rating": 3
+    },
+    {
+      "id": 6,
+      "name": "Дмитрий Волков",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 7,
+      "name": "Сергей Павлов",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 8,
+      "name": "Мария Федорова",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 9,
+      "name": "Артем Николаев",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 10,
+      "name": "Наталья Семенова",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 11,
+      "name": "Александр Белов",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    },
+    {
+      "id": 12,
+      "name": "Екатерина Морозова",
+      "photo": "/img/teachers/default.jpg",
+      "rating": 5
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "title": "Microsoft Word для школьников",
+      "image": "img/courses_icons/45607ea940597fd63f94c71fe46a8ba8.jpg",
+      "duration": "4 недели",
+      "level": "Начальный",
+      "description": "Основы работы с текстовыми документами",
+      "program": [
+        {
+          "title": "Интерфейс программы",
+          "youtubeId": "UzCRmA3WwRE",
+          "theoryFile": "1_interface.txt"
+        },
+        {
+          "title": "Форматирование текста",
+          "youtubeId": "ECkzml_Obbw",
+          "theoryFile": "2_formatting.txt"
+        },
+        {
+          "title": "Создание таблиц",
+          "youtubeId": "roKk9TDZtpE",
+          "theoryFile": "3_tables.txt"
+        },
+        {
+          "title": "Работа с изображениями",
+          "youtubeId": "EcuI2luvuCI",
+          "theoryFile": "4_images.txt"
+        },
+        {
+          "title": "Печать документов",
+          "youtubeId": "Isx8mxrMkUI",
+          "theoryFile": "5_printing.txt"
+        }
+      ],
+      "instructorId": 1
+    },
+    {
+      "id": 2,
+      "title": "Excel для начинающих",
+      "image": "img/courses_icons/png-transparent-excel-hd-logo.png",
+      "duration": "5 недель",
+      "level": "Начальный",
+      "description": "Основы работы с электронными таблицами",
+      "program": [
+        {
+          "title": "Создание таблиц",
+          "youtubeId": "EXCEL_CREATE_ID"
+        },
+        {
+          "title": "Простыe формулы",
+          "youtubeId": "EXCEL_FORMULAS_ID"
+        },
+        {
+          "title": "Диаграммы и графики",
+          "youtubeId": "EXCEL_CHARTS_ID"
+        },
+        {
+          "title": "Сортировка данных",
+          "youtubeId": "EXCEL_SORT_ID"
+        },
+        {
+          "title": "Практические задания",
+          "youtubeId": "EXCEL_PRACTICE_ID"
+        }
+      ],
+      "instructorId": 2
+    },
+    {
+      "id": 3,
+      "title": "PowerPoint: создание презентаций",
+      "image": "img/courses_icons/md_5b334611319f5.jpg",
+      "duration": "3 недели",
+      "level": "Начальный",
+      "description": "Яркие и информативные школьные презентации",
+      "program": [
+        {
+          "title": "Структура презентации",
+          "youtubeId": "PPT_STRUCTURE_ID"
+        },
+        {
+          "title": "Дизайн слайдов",
+          "youtubeId": "PPT_DESIGN_ID"
+        },
+        {
+          "title": "Анимации",
+          "youtubeId": "PPT_ANIMATIONS_ID"
+        },
+        {
+          "title": "Работа с мультимедиа",
+          "youtubeId": "PPT_MEDIA_ID"
+        },
+        {
+          "title": "Подготовка к защите",
+          "youtubeId": "PPT_PRESENT_ID"
+        }
+      ],
+      "instructorId": 3
+    },
+    {
+      "id": 4,
+      "title": "Основы компьютерной грамотности",
+      "image": "img/courses_icons/baby.png",
+      "duration": "6 недель",
+      "level": "Начальный",
+      "description": "Базовые навыки работы с компьютером",
+      "program": [
+        {
+          "title": "Устройство компьютера",
+          "youtubeId": "PC_BASICS_ID"
+        },
+        {
+          "title": "Файлы и папки",
+          "youtubeId": "PC_FILES_ID"
+        },
+        {
+          "title": "Безопасность в интернете",
+          "youtubeId": "PC_SAFETY_ID"
+        },
+        {
+          "title": "Работа с браузерами",
+          "youtubeId": "PC_BROWSERS_ID"
+        },
+        {
+          "title": "Основные программы",
+          "youtubeId": "PC_SOFTWARE_ID"
+        }
+      ],
+      "instructorId": 4
+    },
+    {
+      "id": 5,
+      "title": "Графический редактор Paint",
+      "image": "img/courses_icons/paint.png",
+      "duration": "2 недели",
+      "level": "Начальный",
+      "description": "Создание простой графики",
+      "program": [
+        {
+          "title": "Инструменты рисования",
+          "youtubeId": "PAINT_TOOLS_ID"
+        },
+        {
+          "title": "Работа с цветом",
+          "youtubeId": "PAINT_COLORS_ID"
+        },
+        {
+          "title": "Создание коллажей",
+          "youtubeId": "PAINT_COLLAGE_ID"
+        },
+        {
+          "title": "Сохранение работ",
+          "youtubeId": "PAINT_SAVE_ID"
+        },
+        {
+          "title": "Практические задания",
+          "youtubeId": "PAINT_PRACTICE_ID"
+        }
+      ],
+      "instructorId": 5
+    },
+    {
+      "id": 6,
+      "title": "Работа в Google Документах",
+      "image": "img/courses_icons/googlee.png",
+      "duration": "3 недели",
+      "level": "Начальный",
+      "description": "Совместная работа над документами",
+      "program": [
+        {
+          "title": "Создание документов",
+          "youtubeId": "GDOCS_CREATE_ID"
+        },
+        {
+          "title": "Совместный доступ",
+          "youtubeId": "GDOCS_SHARE_ID"
+        },
+        {
+          "title": "Форматирование",
+          "youtubeId": "GDOCS_FORMAT_ID"
+        },
+        {
+          "title": "Комментарии и правки",
+          "youtubeId": "GDOCS_COMMENTS_ID"
+        },
+        {
+          "title": "Экспорт документов",
+          "youtubeId": "GDOCS_EXPORT_ID"
+        }
+      ],
+      "instructorId": 6
+    },
+    {
+      "id": 7,
+      "title": "Основы алгоритмики",
+      "image": "img/courses_icons/3195640.png",
+      "duration": "4 недели",
+      "level": "Средний",
+      "description": "Логика и основы программирования",
+      "program": [
+        {
+          "title": "Понятие алгоритма",
+          "youtubeId": "ALGO_BASICS_ID"
+        },
+        {
+          "title": "Блок-схемы",
+          "youtubeId": "ALGO_FLOWCHARTS_ID"
+        },
+        {
+          "title": "Линейные алгоритмы",
+          "youtubeId": "ALGO_LINEAR_ID"
+        },
+        {
+          "title": "Ветвления",
+          "youtubeId": "ALGO_BRANCHING_ID"
+        },
+        {
+          "title": "Циклы",
+          "youtubeId": "ALGO_LOOPS_ID"
+        }
+      ],
+      "instructorId": 7
+    },
+    {
+      "id": 8,
+      "title": "Создание сайтов в конструкторе",
+      "image": "img/courses_icons/vidy-struktura-sayta.png",
+      "duration": "5 недель",
+      "level": "Средний",
+      "description": "Простые сайты без программирования",
+      "program": [
+        {
+          "title": "Выбор платформы",
+          "youtubeId": "WEBSITE_PLATFORM_ID"
+        },
+        {
+          "title": "Структура сайта",
+          "youtubeId": "WEBSITE_STRUCTURE_ID"
+        },
+        {
+          "title": "Добавление контента",
+          "youtubeId": "WEBSITE_CONTENT_ID"
+        },
+        {
+          "title": "Дизайн и навигация",
+          "youtubeId": "WEBSITE_DESIGN_ID"
+        },
+        {
+          "title": "Публикация сайта",
+          "youtubeId": "WEBSITE_PUBLISH_ID"
+        }
+      ],
+      "instructorId": 8
+    },
+    {
+      "id": 9,
+      "title": "Видеомонтаж для начинающих",
+      "image": "img/courses_icons/6979672.png",
+      "duration": "6 недель",
+      "level": "Средний",
+      "description": "Основы работы с видео",
+      "program": [
+        {
+          "title": "Интерфейс редактора",
+          "youtubeId": "VIDEO_INTERFACE_ID"
+        },
+        {
+          "title": "Обрезка и склейка",
+          "youtubeId": "VIDEO_CUTTING_ID"
+        },
+        {
+          "title": "Добавление титров",
+          "youtubeId": "VIDEO_TITLES_ID"
+        },
+        {
+          "title": "Простая анимация",
+          "youtubeId": "VIDEO_ANIMATION_ID"
+        },
+        {
+          "title": "Экспорт видео",
+          "youtubeId": "VIDEO_EXPORT_ID"
+        }
+      ],
+      "instructorId": 9
+    },
+    {
+      "id": 10,
+      "title": "Безопасность в интернете",
+      "image": "img/courses_icons/9824424.png",
+      "duration": "3 недели",
+      "level": "Начальный",
+      "description": "Как защитить свои данные",
+      "program": [
+        {
+          "title": "Создание паролей",
+          "youtubeId": "SECURITY_PASSWORDS_ID"
+        },
+        {
+          "title": "Фишинг и мошенничество",
+          "youtubeId": "SECURITY_PHISHING_ID"
+        },
+        {
+          "title": "Конфиденциальность",
+          "youtubeId": "SECURITY_PRIVACY_ID"
+        },
+        {
+          "title": "Безопасность в соцсетях",
+          "youtubeId": "SECURITY_SOCIAL_ID"
+        },
+        {
+          "title": "Защита устройства",
+          "youtubeId": "SECURITY_DEVICE_ID"
+        }
+      ],
+      "instructorId": 10
+    },
+    {
+      "id": 11,
+      "title": "3D-моделирование для школьников",
+      "image": "img/courses_icons/3419175.png",
+      "duration": "8 недель",
+      "level": "Средний",
+      "description": "Основы работы в Tinkercad",
+      "program": [
+        {
+          "title": "Интерфейс программы",
+          "youtubeId": "3D_INTERFACE_ID"
+        },
+        {
+          "title": "Простые фигуры",
+          "youtubeId": "3D_SHAPES_ID"
+        },
+        {
+          "title": "Создание моделей",
+          "youtubeId": "3D_MODELS_ID"
+        },
+        {
+          "title": "3D-печать",
+          "youtubeId": "3D_PRINTING_ID"
+        },
+        {
+          "title": "Школьные проекты",
+          "youtubeId": "3D_PROJECTS_ID"
+        }
+      ],
+      "instructorId": 11
+    },
+    {
+      "id": 12,
+      "title": "Обработка фотографий",
+      "image": "img/courses_icons/pngtree-adobe-illustrator-photoshop-vector-art-icons-and-graphics-png-image_6331273.png",
+      "duration": "4 недели",
+      "level": "Средний",
+      "description": "Основы работы в Photoshop",
+      "program": [
+        {
+          "title": "Интерфейс программы",
+          "youtubeId": "PHOTO_INTERFACE_ID"
+        },
+        {
+          "title": "Коррекция цвета",
+          "youtubeId": "PHOTO_COLOR_ID"
+        },
+        {
+          "title": "Ретушь",
+          "youtubeId": "PHOTO_RETOUCH_ID"
+        },
+        {
+          "title": "Работа со слоями",
+          "youtubeId": "PHOTO_LAYERS_ID"
+        },
+        {
+          "title": "Сохранение для web",
+          "youtubeId": "PHOTO_SAVE_ID"
+        }
+      ],
+      "instructorId": 12
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "student@example.com",
+      "password": "1234",
+      "courses": [
+        2
+      ]
+    },
+    {
+      "id": 1748295219127,
+      "email": "catssin@gmail.com",
+      "password": "12345",
+      "courses": [
+        2
+      ]
+    },
+    {
+      "id": 1748302134115,
+      "email": "jamulya@gmail.com",
+      "password": "456",
+      "courses": [
+        8
+      ]
+    },
+    {
+      "id": 1748302561469,
+      "email": "catssin.lez@gmail.com",
+      "password": "4321",
+      "courses": []
+    },
+    {
+      "id": 1748347633532,
+      "email": "Alymbek@gmail.com",
+      "password": "1234",
+      "courses": []
+    },
+    {
+      "id": 1748355045517,
+      "email": "123@gmail.com",
+      "password": "123",
+      "courses": []
+    },
+    {
+      "id": 1748364722107,
+      "email": "cock@mail.ru",
+      "password": "123",
+      "courses": []
+    },
+    {
+      "id": 1748368923170,
+      "email": "kiashevajama@gmail.com",
+      "password": "123",
+      "courses": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 1748411393581,
+      "email": "12344@gmail.com",
+      "password": "1234",
+      "courses": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 1748413518991,
+      "email": "333@gmail.com",
+      "password": "123",
+      "courses": [
+        1,
+        2
+      ]
+    }
+  ]
+}

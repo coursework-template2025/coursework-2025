@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main class="auth-container">
+    <h2>Вход в систему</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Пароль" required>
+      <button type="submit" class="button">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="/register.html">Зарегистрируйтесь</a></p>
+  </main>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, password })
+      });
+      if (res.ok) {
+        const user = await res.json();
+        localStorage.setItem('userId', user.id);
+        window.location.href = '/my-class.html';
+      } else {
+        alert("Неверный логин или пароль");
+      }
+    });
+  </script>
+</body>
+</html>

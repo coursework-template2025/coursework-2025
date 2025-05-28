@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Все курсы</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  
+<header class="header" style="padding: 20px; position: relative;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
+
+    <!-- Левая кнопка -->
+    <div>
+      <a href="/index.html" class="button small-button">← Назад</a>
+    </div>
+
+    <!-- Заголовок -->
+    <!-- Заголовок -->
+<div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -40%);">
+  <h1 style="margin: 0;">Все курсы</h1>
+</div>
+
+    <!-- Правая часть -->
+    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+      <div id="auth-block" class="auth-links" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+      <a href="/my-class.html" class="button small-button" style="margin-top: 10px;">Мой класс</a>
+    </div>
+
+  </div>
+</header>
+
+
+  <main class="container">
+    <div id="courses-list" class="courses-grid"></div>
+  </main>
+  <script src="/js/courses.js"></script>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Контакты</h3>
+        <p>Email: kiashevajama@gmail.com</p>
+        <p>Телефон: +996 (770) 88-20-99</p>
+      </div>
+      <div class="footer-section">
+        <h3>Соцсети</h3>
+        <a href="#" class="social-link">VK</a>
+        <a href="#" class="social-link">Telegram</a>
+        <a href="#" class="social-link">YouTube</a>
+      </div>
+      <div class="copyright">
+        <p>© 2025 Курсы программирования. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="js/auth-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Материалы курса</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- Подключаем иконки Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <a id="back-to-course" class="button back-button">
+      <i class="fas fa-arrow-left"></i> Назад к курсу
+    </a>
+    <div class="header-content">
+      <h1 id="materials-title">Загрузка курса...</h1>
+      <p class="lesson-progress" id="lesson-progress">Урок 1 из 5</p>
+    </div>
+    <div style="position: absolute; top: 20px; right: 20px;">
+  <div class="auth-links" id="auth-block"></div>
+</div>
+
+  </header>
+
+  <main class="container">
+    <div class="materials-container">
+      <!-- Боковая панель с уроками -->
+      <aside class="lessons-list block">
+        <h2><i class="fas fa-list-ol"></i> Уроки курса</h2>
+        <ul id="lessons-menu" class="lessons-menu"></ul>
+      </aside>
+
+      <!-- Основное содержимое урока -->
+      <article class="lesson-content">
+        <div class="lesson-header block">
+          <h2 id="lesson-title">Выберите урок</h2>
+          <div class="lesson-meta" id="lesson-meta"></div>
+        </div>
+
+        <!-- Контейнер для материалов урока -->
+        <div class="lesson-materials block" id="lesson-materials">
+          <div class="loader">
+            <i class="fas fa-spinner fa-spin"></i> Загрузка материалов...
+          </div>
+        </div>
+
+        <!-- Навигация между уроками -->
+        <div class="lesson-navigation block">
+          <button id="prev-lesson" class="button nav-button" disabled>
+            <i class="fas fa-chevron-left"></i> Предыдущий
+          </button>
+          <button id="next-lesson" class="button nav-button" disabled>
+            Следующий <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script src="/js/course-materials.js"></script>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Контакты</h3>
+        <p>Email: kiashevajama@gmail.com</p>
+        <p>Телефон: +996 (770) 88-20-99</p>
+      </div>
+      <div class="footer-section">
+        <h3>Соцсети</h3>
+        <a href="#" class="social-link">VK</a>
+        <a href="#" class="social-link">Telegram</a>
+        <a href="#" class="social-link">YouTube</a>
+      </div>
+      <div class="copyright">
+        <p>© 2025 Курсы программирования. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="js/auth-ui.js"></script>
+</body>
+</html>

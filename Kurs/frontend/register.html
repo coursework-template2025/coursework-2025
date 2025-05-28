@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main class="auth-container">
+    <h2>Регистрация</h2>
+    <form id="register-form">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Пароль" required>
+      <button type="submit" class="button">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="/login.html">Войти</a></p>
+  </main>
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, password })
+      });
+      if (res.ok) {
+        alert("Успешная регистрация! Войдите в аккаунт.");
+        window.location.href = '/login.html';
+      } else {
+        alert("Ошибка: пользователь уже существует");
+      }
+    });
+  </script>
+</body>
+</html>

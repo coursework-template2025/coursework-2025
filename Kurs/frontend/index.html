@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Курсы программирования</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header" style="position: relative; padding: 20px;">
+    <h1>Онлайн-курсы</h1>
+    <div style="position: absolute; top: 20px; right: 20px;">
+      <div class="auth-links" id="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Блок популярных курсов -->
+    <div class="block">
+      <h2 style="text-align: center;">Добро пожаловать!</h2>
+      <h3 style="text-align: center;">Популярные курсы</h3>
+      <div style="display: flex; justify-content: center;">
+       <div class="course-grid popular-courses" style="max-width: 960px;"></div>
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="/courses.html" class="button">Смотреть все курсы</a>
+      </div>
+</div>
+
+
+    <!-- Блок преподавателей -->
+    <div class="block">
+      <h2>Преподаватели</h2>
+      <div id="teachers" class="teacher-grid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Контакты</h3>
+        <p>Email: kiashevajama@gmail.com</p>
+        <p>Телефон: +996 (770) 88-20-99</p>
+      </div>
+      <div class="footer-section">
+        <h3>Соцсети</h3>
+        <a href="#" class="social-link">VK</a>
+        <a href="#" class="social-link">Telegram</a>
+        <a href="#" class="social-link">YouTube</a>
+      </div>
+      <div class="copyright">
+        <p>© 2025 Курсы программирования. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Сценарий авторизации -->
+  <script src="/js/auth-ui.js"></script>
+  <!-- Загрузка популярных курсов -->
+  <script>
+    const popularCourseIds = [4, 7, 9]; // ← ТУТ УКАЗЫВАЕШЬ СВОИ
+
+    fetch('/api/courses')
+      .then(res => res.json())
+      .then(courses => {
+        const container = document.querySelector('.popular-courses');
+        const selectedCourses = courses.filter(c => popularCourseIds.includes(c.id));
+
+        selectedCourses.forEach(course => {
+          const card = document.createElement('div');
+          card.className = 'course-card';
+          card.innerHTML = `
+            <a href="/course.html?id=${course.id}" style="text-decoration: none; color: inherit;">
+              <img src="${course.image}" alt="${course.title}" style="width:100%; height:160px; object-fit:cover; border-radius:8px;">
+              <h3>${course.title}</h3>
+              <p>${course.description}</p>
+            </a>
+          `;
+          container.appendChild(card);
+        });
+      });
+  </script>
+  <script src="/js/index.js"></script>
+
+</body>
+</html>
+
+
