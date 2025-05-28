@@ -117,7 +117,8 @@
         .edit-button,
         .back-button,
         .logout-button,
-        .export-button {
+        .export-button,
+        .delete-button {
             padding: 10px 20px;
             border-radius: 8px;
             font-size: 14px;
@@ -156,6 +157,14 @@
             color: white;
         }
         .logout-button:hover {
+            background-color: var(--danger-hover);
+            transform: scale(1.05);
+        }
+        .delete-button {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        .delete-button:hover {
             background-color: var(--danger-hover);
             transform: scale(1.05);
         }
@@ -203,15 +212,12 @@
             header h1 {
                 font-size: 22px;
             }
-
             .resume-details h2 {
                 font-size: 18px;
             }
-
             .detail-item {
                 font-size: 14px;
             }
-
             .detail-item strong {
                 width: 120px;
             }
@@ -239,6 +245,7 @@
                 <a href="{% url 'resume_edit' pk=resume.pk %}" class="edit-button"><i class="bi bi-pencil-square"></i> Редактировать</a>
                 <a href="{% url 'index' %}" class="back-button">На главную</a>
                 <a href="{% url 'logout' %}" class="logout-button">Выйти</a>
+                <a href="{% url 'resume_delete' pk=resume.pk %}" class="delete-button" onclick="return confirm('Вы уверены, что хотите удалить резюме? Это действие необратимо.');"><i class="bi bi-trash"></i> Удалить</a>
             </div>
         </header>
         <div class="resume-details">
