@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Регистрация и вход</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    form { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; }
+    .error { color: red; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+  <h2>Регистрация</h2>
+  <form id="registerForm">
+    <input type="text" name="username" placeholder="Имя пользователя" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Пароль" required />
+    <button type="submit">Зарегистрироваться</button>
+    <div id="registerError" class="error"></div>
+  </form>
+
+  <h2>Вход</h2>
+  <form id="loginForm">
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Пароль" required />
+    <button type="submit">Войти</button>
+    <div id="loginError" class="error"></div>
+  </form>
+
+  <script>
+    const registerForm = document.getElementById("registerForm");
+    const loginForm = document.getElementById("loginForm");
+    const registerError = document.getElementById("registerError");
+    const loginError = document.getElementById("loginError");
+
+    registerForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      registerError.textContent = "";
+
+      const formData = new FormData(registerForm);
+      const data = {
+        username: formData.get("username"),
+        email: formData.get("email"),
+        password: formData.get("password")
+      };
+
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+          registerError.textContent = json.msg || json.errors?.map(e => e.msg).join(", ") || "Ошибка регистрации";
+          return;
+        }
+
+        alert("Регистрация успешна! Токен: " + json.token);
+        registerForm.reset();
+      } catch (err) {
+        registerError.textContent = "Ошибка сети";
+      }
+    });
+
+    loginForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      loginError.textContent = "";
+
+      const formData = new FormData(loginForm);
+      const data = {
+        email: formData.get("email"),
+        password: formData.get("password")
+      };
+
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+          loginError.textContent = json.msg || json.errors?.map(e => e.msg).join(", ") || "Ошибка входа";
+          return;
+        }
+
+        alert("Вход успешен! Токен: " + json.token);
+        loginForm.reset();
+      } catch (err) {
+        loginError.textContent = "Ошибка сети";
+      }
+    });
+  </script>
+
+</body>
+</html>
