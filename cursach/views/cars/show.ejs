@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/styles.css">
+
+<div class="car-card">
+  <div class="car-details">
+    <h2><%= car.title %></h2>
+    <ul>
+      <li><strong>Год выпуска:</strong> <%= car.year || 'не указан' %></li>
+      <li><strong>Цена:</strong> <%= car.price %> $</li>
+      <li><strong>Телефон продавца:</strong> <%= car.phone || 'не указан' %></li>
+      <li><strong>Дата публикации:</strong> <%= car.createdAt.toLocaleDateString('ru-RU') %></li>
+    </ul>
+    <h4>Дополнительная информация</h4>
+    <p><%= car.description || 'Нет дополнительной информации' %></p>
+
+    <a href="/cars" class="btn btn-link">← Назад к списку</a>
+    <a href="/cars/<%= car._id %>/edit" class="btn btn-primary">Редактировать</a>
+
+    <form action="/cars/<%= car._id %>?_method=DELETE" method="POST" style="display: inline;">
+      <button class="btn btn-danger">Удалить</button>
+    </form>
+  </div>
+
+  <div class="car-image">
+    <img src="<%= car.photo %>" alt="<%= car.title %>" />
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Автомобили</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <h1 style="text-align:center; margin-bottom: 20px;">Список автомобилей</h1>
+
+  <div class="cars-container">
+    <% if (cars.length === 0) { %>
+      <p>Пока нет добавленных автомобилей.</p>
+    <% } else { %>
+      <% cars.forEach(car => { %>
+        <div class="car-card">
+          <% if (car.photo) { %>
+            <img src="<%= car.photo %>" alt="Фото <%= car.brand %> <%= car.model %>" />
+          <% } else { %>
+            <img src="/default-car.png" alt="Фото отсутствует" />
+          <% } %>
+
+          <div class="car-content">
+            <h3 class="car-title"><%= car.brand %> <%= car.model %> (<%= car.year %>)</h3>
+            <p class="car-info"><%= car.additionalInfo || 'Дополнительная информация отсутствует' %></p>
+            <p class="car-price">Цена: ₽<%= car.price.toLocaleString('ru-RU') %></p>
+            <p class="car-date">Опубликовано: <%= new Date(car.createdAt).toLocaleDateString('ru-RU') %></p>
+            <a href="/cars/<%= car._id %>" class="car-btn">Подробнее</a>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

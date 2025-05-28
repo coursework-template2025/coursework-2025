@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/style.css">
+<h2>Редактировать авто</h2>
+<form action="/cars/<%= car._id %>" method="POST" enctype="multipart/form-data">
+  <input type="text" name="brand" value="<%= car.brand %>" required>
+  <input type="text" name="model" value="<%= car.model %>" required>
+  <input type="number" name="price" value="<%= car.price %>" required>
+  <input type="file" name="photo">
+  <button type="submit">Обновить</button>
+</form>
+
+<%- include('../partials/footer') %>
