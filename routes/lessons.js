@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { db } = require('../initDB');
-const bcrypt = require('bcrypt');  // <-- добавь эту строку!
+const bcrypt = require('bcrypt');  
 
 // Главная страница с уроками и поиском
 router.get('/', (req, res) => {
@@ -85,12 +85,12 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// --- Страница создания нового урока ---
+// Страница создания нового урока 
 router.get('/lesson/new', (req, res) => {
   res.render('form', { lesson: {}, questions: [] });
 });
 
-// --- Обработка создания нового урока ---
+//  Обработка создания нового урока 
 router.post('/lesson/new', (req, res) => {
     const { title, description, content, video_url, image_url } = req.body;
     const sql = `INSERT INTO lessons (title, description, content, video_url, image_url) VALUES (?, ?, ?, ?, ?)`;
@@ -102,7 +102,7 @@ router.post('/lesson/new', (req, res) => {
     });
   });
 
-// --- Страница редактирования урока ---
+// Страница редактирования урока 
 router.get('/lesson/edit/:id', (req, res) => {
   const id = req.params.id;
   db.get('SELECT * FROM lessons WHERE id = ?', [id], (err, lesson) => {
@@ -115,7 +115,7 @@ router.get('/lesson/edit/:id', (req, res) => {
   });
 });
 
-// --- Обработка обновления урока ---
+// Обработка обновления урока 
 router.post('/lesson/edit/:id', (req, res) => {
   const id = req.params.id;
   const { title, description, content, video_url, image_url } = req.body;
@@ -125,7 +125,7 @@ router.post('/lesson/edit/:id', (req, res) => {
     res.redirect(`/lesson/${id}`);
   });
 });
-// --- Страница просмотра отдельного урока ---
+// Страница просмотра отдельного урока
 router.get('/lesson/:id', (req, res) => {
     const id = req.params.id;
     db.get('SELECT * FROM lessons WHERE id = ?', [id], (err, lesson) => {
@@ -135,16 +135,14 @@ router.get('/lesson/:id', (req, res) => {
       db.all('SELECT * FROM questions WHERE lesson_id = ?', [id], (err, questions) => {
         if (err) return res.status(500).send('Database error');
   
-        // Добавляем булевую переменную hasQuestions
         const hasQuestions = questions.length > 0;
   
-        // Передаем в шаблон lesson, questions и hasQuestions
         res.render('lesson', { lesson, questions, hasQuestions });
       });
     });
   });
   
-// --- Удаление урока ---
+// Удаление урока 
 router.post('/lesson/delete/:id', (req, res) => {
   const id = req.params.id;
   db.run('DELETE FROM lessons WHERE id = ?', [id], err => {
@@ -152,13 +150,13 @@ router.post('/lesson/delete/:id', (req, res) => {
     res.redirect('/');
   });
 });
-// --- Страница создания вопроса для урока ---
+// Страница создания вопроса для урока 
 router.get('/lesson/:id/question/new', (req, res) => {
     const lesson_id = req.params.id;
     res.render('question_form', { lesson_id });
   });
   
-  // --- Обработка создания вопроса ---
+  // Обработка создания вопроса 
   router.post('/lesson/:id/question/new', (req, res) => {
     const lesson_id = req.params.id;
     const { question_text, question_type, options, correct_answer, explanation } = req.body;
@@ -189,7 +187,6 @@ router.get('/lesson/:id/question/new', (req, res) => {
       db.all('SELECT * FROM questions WHERE lesson_id = ?', [lessonId], (err, questions) => {
         if (err) return res.status(500).send('Ошибка загрузки вопросов');
   
-        // 💡 Важно: передаём lesson и questions
         res.render('quiz', {
           lesson,
           questions

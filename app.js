@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session'); 
 const app = express();
-const port = 3004;
+const port = 3000;
 
 const db = require('./initDB');
 
@@ -27,5 +27,5 @@ const lessonsRouter = require('./routes/lessons');
 app.use('/', lessonsRouter);
 
 app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+  console.log(`Сервер запущен на http://localhost:${port}`);
 });
