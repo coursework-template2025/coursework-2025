@@ -1,0 +1,225 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+select:hover, input:hover, button:hover {
+  background: rgb(200,200,200);
+  box-shadow: 2px 0px 16px rgb(150,150,150);
+}
+.Time {
+  background: rgb(254,254,254);
+  box-shadow: rgb(150,150,150) 0px 2px 12px;
+  padding: 1rem;
+}
+.opener {
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  top: 0.5rem;
+  padding: 1.5rem;
+  position: absolute;
+  background: rgb(30,30,30);
+  display: none;
+}
+select, input, button {
+  border: none;
+  box-shadow: 2px 0px 8px rgb(150,150,150);
+  background: rgb(254,254,254);
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  margin: 0.5rem;
+}
+.home {
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.home_thing {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100%);
+  padding: 1rem;
+}
+.home img {
+  box-shadow: 2px 0px 16px rgb(150,150,150);
+  margin: 1rem;
+}
+.us_icon {
+  width: 16rem;
+  border-radius: 10rem;
+  box-shadow: 2px 0px 8px rgb(150,150,150);
+  margin-bottom: 1rem;
+}
+.form {
+  background: rgb(220,220,220);
+  box-shadow: 2px 0px 16px rgb(20,20,20);
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  padding-top: 2rem;
+  z-index: 1;
+  text-align: left;
+}
+.form label {
+  padding-left: 1rem;
+}
+.colmn {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.news {
+  overflow-y: auto;
+}
+.news img {
+  margin-top: 1rem;
+  position: relative;
+  width: 3rem;
+}
+.cont {
+  display: flex;
+  justify-content: left;
+  align-items: start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
+}
+.mid_align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.day {
+  background: rgb(254,254,254);
+  box-shadow: 2px 0px 16px rgb(150,150,150);
+  padding: 1.5rem;
+  margin: 1rem;
+}
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+}
+.right_side {
+  width: calc(100vw - 20rem);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.red { color: rgb(255, 50, 75); }
+.block {
+  background: rgb(254,254,254);
+  box-shadow: 2px 0px 16px rgb(150,150,150);
+  padding: 2rem;
+  margin: 1.5rem;
+}
+.right_side p {
+  margin-top: 1rem;
+}
+.right_side h4 {
+
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+nav {
+  display: block;
+  background: rgb(30,30,30);
+  color: rgb(220,220,220);
+  font-size: 1.2rem;
+  width: 20rem;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+nav a {
+  font-weight: 700;
+  color: rgb(210,210,210);
+  text-decoration: none;
+}
+nav a:hover, nav a:active {
+  color: rgb(254,254,254);
+} 
+nav li {
+  padding: 1rem;
+  padding-left: 1.5rem;
+  min-width: 20rem;
+  border-bottom: rgb(20,20,20) solid 0.2rem;
+}
+nav li:hover, nav li:active {
+  background: rgb(50,50,50)
+}
+@media (max-width: 900px) {
+  * {
+    font-size: 1rem;
+    min-width: none;
+    min-height: none;
+  }
+  .right_side {
+    width: 100vw;
+  }
+  nav {
+    width: 14rem;
+    display: none;
+    position: absolute;
+  }
+  nav li {
+    min-width: 14rem;
+  }
+  .sas {
+    position: relative;
+    left: 4rem;
+  }
+  .us_icon {
+    width: 12rem;
+  }
+  .opener {
+    display: block;
+    left: 0;
+  }
+  .home img {
+    max-width: 20rem;
+    width: auto;
+  }
+}
+@media (max-width: 480px) {
+  * {
+    font-size: 0.9rem;
+  }
+  .sas {
+    position: relative;
+    left: 4rem;
+  }
+  .news a {
+    z-index: 0;
+  }
+  nav {
+    z-index: 5;
+  }
+}
