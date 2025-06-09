@@ -1,0 +1,225 @@
+/* Общие стили */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 1s ease, color 1s ease; /* Сделал дольше для плавности */
+}
+
+/* Светлая тема */
+body.light {
+  background-color: #fff8f0;
+  color: #111111;
+}
+
+body.light .sidebar {
+  background-color: #d3d3d3;
+  color: #333333;
+}
+
+body.light .content {
+  background-color: #f5f7fa;
+  color: #2e2e2e;
+}
+
+body.light .card {
+  background-color: #fff2e8;
+  color: #3b1f0b;
+  box-shadow: 0 4px 18px rgba(186, 143, 107, 0.15);
+}
+
+body.light button {
+  background-color: #caa078;
+  color: #3b1f0b;
+  box-shadow: 0 4px 12px rgba(202, 160, 120, 0.5);
+}
+
+body.light button:hover {
+  background-color: #b07f5d;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(176, 127, 93, 0.7);
+}
+
+body.light .sidebar a:hover {
+  background-color: #f3d5c0;
+  color: #7a4b35;
+}
+
+body.light .sidebar a.active {
+  background-color: #f7c9b6;
+  color: #7a4b35;
+}
+
+/* Тёмная тема */
+body.dark {
+  background-color: #1a2634;
+  color: #f0e6d2;
+}
+
+body.dark .sidebar {
+  background-color: #24344b;
+  color: #f0e6d2;
+}
+
+body.dark .content {
+  background-color: #2e415e;
+  color: #f0e6d2;
+}
+
+body.dark .card {
+  background-color: #3c4f72;
+  color: #f0e6d2;
+  box-shadow: 0 4px 18px rgba(89, 117, 153, 0.5);
+}
+
+body.dark button {
+  background-color: #6b90c4;
+  color: #f0e6d2;
+  box-shadow: 0 4px 12px rgba(107, 144, 196, 0.4);
+}
+
+body.dark button:hover {
+  background-color: #5073a8;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(80, 115, 168, 0.6);
+}
+
+body.dark .sidebar a:hover {
+  background-color: #496a90;
+  color: #dcd2b4;
+}
+
+body.dark .sidebar a.active {
+  background-color: #5a7ab8;
+  color: #f0e6d2;
+}
+
+/* Природная тема */
+body.nature {
+  background-color: #e6f2e6;
+  color: #203a1e;
+}
+
+body.nature .sidebar {
+  background-color: #b2d8b2;
+  color: #203a1e;
+}
+
+body.nature .content {
+  background-color: #f0fff0;
+  color: #203a1e;
+}
+
+body.nature .card {
+  background-color: #d4f5d4;
+  color: #1b3d1b;
+  box-shadow: 0 4px 18px rgba(140, 194, 140, 0.3);
+}
+
+body.nature button {
+  background-color: #74c174;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(116, 193, 116, 0.4);
+}
+
+body.nature button:hover {
+  background-color: #5aa85a;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(90, 168, 90, 0.6);
+}
+
+body.nature .sidebar a:hover {
+  background-color: #a8e4a0;
+  color: #1a471a;
+}
+
+body.nature .sidebar a.active {
+  background-color: #8dd88d;
+  color: #1a471a;
+}
+
+/* Контейнер приложения */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  padding: 30px;
+  gap: 30px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Сайдбар */
+.sidebar {
+  width: 280px;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+  font-size: 1.5rem; /* Увеличил размер шрифта с 1.3rem */
+  font-weight: 700; /* Сделал шрифт чуть жирнее */
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  transition: background-color 1s ease, color 1s ease; /* Дольше для плавности */
+}
+
+.sidebar a {
+  text-decoration: none;
+  padding: 14px 20px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: block;
+  color: inherit;
+  font-size: 1.4rem; /* Немного увеличил шрифт для ссылок */
+  font-weight: 600;
+}
+
+/* Основной контент */
+.content {
+  flex-grow: 1;
+  padding: 30px 40px;
+  font-size: 1.2rem;
+  border-radius: 16px;
+  min-height: 80vh;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Кнопки */
+button {
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  cursor: pointer;
+  font-size: 1.35rem;
+  padding: 18px 36px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+}
+
+/* Анимации */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.card {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: slideUp 0.4s ease forwards;
+  padding: 28px;
+  font-size: 1.25rem;
+  border-radius: 14px;
+  margin-bottom: 28px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
