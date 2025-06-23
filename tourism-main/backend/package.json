@@ -1,10 +1,10 @@
 {
-  "name": "calendar",
+  "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon server.js",
+    "seed": "node fixtures.js"
   },
   "keywords": [],
   "author": "",
@@ -12,12 +12,10 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.0",
-    "ejs": "^3.1.10",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "express-session": "^1.18.1",
-    "mogoose": "^0.0.1-security",
-    "sqlite3": "^5.1.7"
+    "mongoose": "^8.15.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

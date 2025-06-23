@@ -1,0 +1,132 @@
+.tours {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+h2 {
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 28px;
+  color: #222;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: #f7f7f7;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mainContent {
+  flex: 1;
+}
+
+.filterGroup {
+  margin-bottom: 20px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+}
+
+.checkboxLabel input[type='checkbox'] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: #ff6b00;
+  box-shadow: 0 0 5px rgba(255, 107, 0, 0.5);
+}
+
+.tourList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+p {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Кнопка "Фильтр" и адаптивность */
+.filterToggle {
+  display: none;
+  margin-bottom: 20px;
+}
+
+.filterButton {
+  display: none;
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.searchButton {
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar.open {
+    display: block;
+  }
+
+  .filterToggle {
+    display: block;
+  }
+
+  .filterButton {
+    display: inline-block;
+  }
+}
