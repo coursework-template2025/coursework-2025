@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Submit Application Faults</title>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Форма для отправки заявки на ремонт автомобиля администратору</h3>
+            <h4>Выберите машину, а затем напишите описание проблемы и автомобиля</h4>
+        </div>
+        <div class="card-body">
+            <form th:action="@{submit-application-DVS}" th:object="${submitApplicationUser}" method="post">
+                <div class="row">
+                    <div class="col-2">Cars</div>
+                    <div class="col-8">
+                        <select class="form-control" required="required" th:field="*{carId}">
+                            <option th:value="null">SELECT</option>
+                            <option th:each="carUser : ${carUserList}"
+                                    th:value="${carUser.id}"
+                                    th:utext="${carUser.models.mark.getName()}+' : '+${carUser.models.getName()}"
+                            ></option>
+                        </select>
+                    </div>
+                </div>
+                <label for="description">
+                    <label for="description" class="form-label">Описание проблемы</label>
+                </label><textarea class="form-control" id="description" rows="4"
+                                  name="description"
+                                  th:field="*{description}"
+                                  required="required"></textarea>
+                <br>
+                <div><input type="submit" class="btn btn-primary btn-lg" value="Отправить заявку"/></div>
+                <br>
+            </form>
+            <form th:action="@{/mainPage-note}" method="post">
+                <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

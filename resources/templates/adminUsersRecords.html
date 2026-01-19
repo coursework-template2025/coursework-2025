@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin response to request</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <h3>Заявки клиентов</h3>
+    <hr/>
+    <div class="card-block">
+        <table class="table table-bordered table-striped" id="myTable" border="3">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>FIRST NAME</th>
+                <th>LAST NAME</th>
+                <th>DATE OF CREATION</th>
+                <th>DATE FROM</th>
+                <th>DATE BEFORE</th>
+                <th>DESCRIPTION</th>
+                <th>PRICE</th>
+                <th>FAULTS</th>
+                <th>MARK</th>
+                <th>MODEL</th>
+                <th>STATUS</th>
+                <th>EDIT</th>
+                <th>DENIED</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="responseToRequestAdmin : ${notifications}">
+                <td th:text="${responseToRequestAdmin.id}"></td>
+                <td th:text="${responseToRequestAdmin.user.firstName}"></td>
+                <td th:text="${responseToRequestAdmin.user.lastName}"></td>
+                <td th:text="${responseToRequestAdmin.dateTime}"></td>
+                <td th:text="${responseToRequestAdmin.dateFrom}"></td>
+                <td th:text="${responseToRequestAdmin.dateBefore}"></td>
+                <td th:text="${responseToRequestAdmin.description}"></td>
+                <td th:text="${responseToRequestAdmin.price}"></td>
+                <td th:text="${responseToRequestAdmin.faults}"></td>
+                <td th:text="${responseToRequestAdmin.mark}"></td>
+                <td th:text="${responseToRequestAdmin.model}"></td>
+                <td th:text="${responseToRequestAdmin.status}"></td>
+                <input hidden="hidden" type="email" th:value="${responseToRequestAdmin.user.getEmail()}" name="email">
+                <td><a class="btn btn-warning" th:href="@{/user-response/(id=${responseToRequestAdmin.id})}"
+                       role="button">Edit</a>
+                </td>
+                <td><a class="btn btn-danger" th:href="@{/denied-response/(responseId=${responseToRequestAdmin.id})}" role="button">Denied</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <form th:action="@{/mainPage-admin}" method="post">
+            <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
