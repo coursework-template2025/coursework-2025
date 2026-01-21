@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top mb-4">
+    <div class="container">
+        <a class="btn btn-light border shadow-sm" href="/">
+            <i class="bi bi-arrow-left me-1"></i> На главную
+        </a>
+    </div>
+</nav>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+            <div class="card no-hover text-center shadow mb-4">
+                <div class="card-body py-5">
+                    <div class="mb-3">
+                        <div class="d-inline-block p-3 rounded-circle bg-primary bg-opacity-10">
+                            <i class="bi bi-person-fill display-4 text-primary"></i>
+                        </div>
+                    </div>
+                    <h3 class="card-title fw-bold mb-1"><%= user.username %></h3>
+
+                    <div class="friend-code-box mx-auto" style="max-width: 300px;"
+                         onclick="navigator.clipboard.writeText('<%= user.friend_code %>'); alert('Код скопирован!');">
+                        <p class="text-muted small mb-1 text-uppercase fw-bold text-spacing">Ваш Friend Code</p>
+                        <h1 class="display-4 fw-bold mb-0 friend-code-text"><%= user.friend_code %></h1>
+                        <small class="text-muted mt-2 d-block user-select-none">
+                            <i class="bi bi-clipboard me-1"></i> Нажмите, чтобы скопировать
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white fw-bold">Добавить друга</div>
+                <div class="card-body">
+                    <form action="/add-friend" method="POST" class="d-flex gap-2">
+                        <input type="text" name="friend_code" class="form-control" placeholder="Код друга (напр: 7F3A91)" required>
+                        <button class="btn btn-success px-4">Добавить</button>
+                    </form>
+                </div>
+            </div>
+
+            <h5 class="fw-bold text-secondary mb-3">Ваши друзья (<%= friends.length %>)</h5>
+            <div class="list-group shadow-sm rounded-3 overflow-hidden mb-5">
+                <% if(friends.length === 0) { %>
+                    <div class="list-group-item text-center text-muted py-4">Список друзей пуст</div>
+                <% } %>
+                <% friends.forEach(friend => { %>
+                    <div class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <span class="fw-medium"><%= friend.username %></span>
+                        <span class="badge bg-light text-secondary border font-monospace"><%= friend.friend_code %></span>
+                    </div>
+                <% }) %>
+            </div>
+
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger bg-opacity-10 text-danger fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Опасная зона
+                </div>
+                <div class="card-body">
+                    <p class="small text-muted">После удаления профиля все ваши поездки, сообщения и связи с друзьями будут безвозвратно удалены.</p>
+
+                    <form action="/delete-account" method="POST" onsubmit="return confirm('Вы точно хотите удалить профиль? Это действие нельзя отменить.');">
+                        <button type="submit" class="btn btn-outline-danger w-100">
+                            Удалить профиль навсегда
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

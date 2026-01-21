@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои поездки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-send-fill me-2"></i>Travel Planner
+        </a>
+
+        <div class="d-flex align-items-center gap-2">
+            <a href="/profile" class="btn btn-light shadow-sm border">
+                <i class="bi bi-person-circle text-primary"></i>
+                <span class="d-none d-sm-inline ms-1 fw-medium"><%= user.username %></span>
+            </a>
+            <a href="/logout" class="btn btn-nav-outline btn-sm">Выйти</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container pb-5">
+    <div class="row">
+
+        <div class="col-lg-4 mb-4">
+            <div class="card no-hover shadow-sm border-0 sticky-top" style="top: 100px; z-index: 1;">
+                <div class="card-header bg-white border-0 pb-0 pt-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-plus-circle-fill text-success me-2"></i>Новая поездка</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/add" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Направление</label>
+                            <input type="text" name="destination" class="form-control" placeholder="Куда летим?" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label small text-muted fw-bold">С</label>
+                                <input type="date" name="start_date" class="form-control" required>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small text-muted fw-bold">По</label>
+                                <input type="date" name="end_date" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Бюджет ($)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">$</span>
+                                <input type="number" name="budget" class="form-control border-start-0 ps-0" placeholder="0" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted fw-bold">Краткое описание</label>
+                            <textarea name="description" class="form-control" placeholder="Заметки..." rows="2"></textarea>
+                        </div>
+
+                        <% if (friends.length > 0) { %>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted fw-bold">Пригласить друзей</label>
+                                <div class="border rounded p-2 bg-light" style="max-height: 120px; overflow-y: auto;">
+                                    <% friends.forEach(friend => { %>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="participants" value="<%= friend.id %>" id="f<%= friend.id %>">
+                                            <label class="form-check-label w-100" for="f<%= friend.id %>" style="cursor: pointer;">
+                                                <%= friend.username %>
+                                            </label>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        <% } else { %>
+                            <div class="alert alert-light border text-center small py-2 mb-3">
+                                <a href="/profile" class="text-decoration-none fw-bold">Добавьте друзей</a>, чтобы планировать вместе.
+                            </div>
+                        <% } %>
+
+                        <button type="submit" class="btn btn-primary w-100 shadow-sm">Создать поездку</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0 fw-bold text-secondary">Ваши планы</h4>
+
+                <form action="/" method="GET" class="d-flex align-items-center">
+                    <div class="input-group input-group-sm shadow-sm">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-sort-down"></i></span>
+                        <select name="sort" class="form-select border-start-0" onchange="this.form.submit()" style="min-width: 160px; cursor: pointer; border-left: none;">
+                            <option value="date_asc" <%= currentSort == 'date_asc' ? 'selected' : '' %>>Сначала скорые</option>
+                            <option value="date_desc" <%= currentSort == 'date_desc' ? 'selected' : '' %>>Сначала дальние</option>
+                            <option value="name_asc" <%= currentSort == 'name_asc' ? 'selected' : '' %>>По названию (А-Я)</option>
+                            <option value="name_desc" <%= currentSort == 'name_desc' ? 'selected' : '' %>>По названию (Я-А)</option>
+                            <option value="budget_asc" <%= currentSort == 'budget_asc' ? 'selected' : '' %>>Бюджет (min)</option>
+                            <option value="budget_desc" <%= currentSort == 'budget_desc' ? 'selected' : '' %>>Бюджет (max)</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <% if (trips.length === 0) { %>
+                <div class="text-center py-5">
+                    <i class="bi bi-map text-muted" style="font-size: 4rem; opacity: 0.3;"></i>
+                    <p class="text-muted mt-3">Пока пусто. Создайте своё первое приключение!</p>
+                </div>
+            <% } %>
+
+            <% trips.forEach(function(trip) { %>
+                <%
+                    // Логика проверки даты (прошла ли поездка?)
+                    const today = new Date();
+                    // Сбрасываем время у "сегодня", чтобы сравнение шло только по датам
+                    today.setHours(0,0,0,0);
+                    const endDate = new Date(trip.end_date);
+                    const isPast = endDate < today;
+                %>
+
+                <div class="card mb-3 border-start border-4
+                        <%= isPast ? 'border-secondary bg-light' : (trip.creator_id == user.userId ? 'border-primary' : 'border-info') %>"
+                     style="<%= isPast ? 'filter: grayscale(1); opacity: 0.8;' : '' %> transition: all 0.3s;">
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                                    <h4 class="card-title fw-bold mb-0 <%= isPast ? 'text-muted text-decoration-line-through' : 'text-dark' %>">
+                                        <%= trip.destination %>
+                                    </h4>
+
+                                    <% if (isPast) { %>
+                                        <span class="badge bg-secondary rounded-pill" style="font-size: 0.6em">ЗАВЕРШЕНА</span>
+                                    <% } else if(trip.creator_id != user.userId) { %>
+                                        <span class="badge bg-info bg-opacity-10 text-info border border-info rounded-pill" style="font-size: 0.6em">
+                                                Приглашение от <%= trip.creator_name %>
+                                            </span>
+                                    <% } %>
+                                </div>
+
+                                <p class="text-muted mb-2 small">
+                                    <i class="bi bi-calendar-event me-1"></i> <%= trip.start_date %> — <%= trip.end_date %>
+                                </p>
+
+                                <% if (trip.participant_names) { %>
+                                    <div class="d-flex align-items-center text-secondary small">
+                                        <i class="bi bi-people-fill me-2"></i>
+                                        <span class="text-truncate" style="max-width: 300px;" title="<%= trip.participant_names %>">
+                                                <%= trip.participant_names %>
+                                            </span>
+                                    </div>
+                                <% } %>
+                            </div>
+
+                            <div class="text-end" style="min-width: 100px;">
+                                <div class="fw-bold <%= isPast ? 'text-muted' : 'text-success' %> fs-5 mb-2">$<%= trip.budget %></div>
+
+                                <a href="/trip/<%= trip.id %>" class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm" style="<%= isPast ? 'pointer-events: auto; cursor: pointer;' : '' %>">
+                                    <%= isPast ? 'Архив' : 'Открыть' %> <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+</body>
+</html>

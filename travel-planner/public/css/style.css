@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #4F46E5; /* Индиго */
+    --primary-hover: #4338ca;
+    --accent-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    --bg-color: #F3F4F6;
+    --card-bg: #FFFFFF;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius: 12px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* 2. Навигация */
+.navbar {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-sm);
+    padding: 0.8rem 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--primary-color) !important;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+.btn-nav-outline {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 6px 16px;
+    transition: all 0.2s;
+}
+
+.btn-nav-outline:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* 3. Карточки */
+.card {
+    border: none;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Отключаем ховер для карточек, где это не нужно (форма добавления) */
+.card.no-hover:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+    padding: 1.2rem;
+}
+
+/* 4. Кнопки и формы */
+.btn-primary {
+    background: var(--accent-gradient);
+    border: none;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+    box-shadow: 0 6px 8px rgba(79, 70, 229, 0.4);
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.form-control:focus {
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    border-color: var(--primary-color);
+}
+
+/* 5. Стили чата (Trip Details) */
+.chat-container {
+    background: #ffffff;
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid #eee;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Скроллбар для чата */
+.chat-box::-webkit-scrollbar { width: 6px; }
+.chat-box::-webkit-scrollbar-thumb { background-color: #ddd; border-radius: 3px; }
+
+.message-bubble {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    position: relative;
+    line-height: 1.4;
+}
+
+/* Мои сообщения */
+.msg-own {
+    align-self: flex-end;
+    background: var(--accent-gradient);
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+.msg-own .msg-meta { color: rgba(255,255,255, 0.8); }
+
+/* Чужие сообщения */
+.msg-other {
+    align-self: flex-start;
+    background: #F3F4F6;
+    color: var(--text-main);
+    border-bottom-left-radius: 2px;
+}
+
+.msg-other .msg-author {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 2px;
+    display: block;
+}
+
+.msg-meta {
+    font-size: 0.7rem;
+    margin-top: 4px;
+    display: block;
+    text-align: right;
+}
+
+/* 6. Уникальный код (Profile) */
+.friend-code-box {
+    background: #EEF2FF;
+    border: 2px dashed var(--primary-color);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.friend-code-box:hover {
+    background: #E0E7FF;
+}
+
+.friend-code-text {
+    font-family: 'Monaco', monospace;
+    color: var(--primary-color);
+    letter-spacing: 2px;
+}
