@@ -1,0 +1,63 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.register-card {
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 420px;
+}
+
+.register-title {
+  text-align: center;
+  margin-bottom: 18px;
+  color: var(--text);
+  font-size: 22px;
+  letter-spacing: -0.2px;
+}
+
+.error-message {
+  background: rgba(255, 91, 122, 0.12);
+  color: rgba(255, 215, 223, 0.95);
+  border: 1px solid rgba(255, 91, 122, 0.25);
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.success-message {
+  background: rgba(91, 255, 162, 0.10);
+  color: rgba(215, 255, 235, 0.92);
+  border: 1px solid rgba(91, 255, 162, 0.20);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.register-footer {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.register-footer a {
+  color: rgba(91, 140, 255, 0.95);
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
