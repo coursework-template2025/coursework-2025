@@ -1,0 +1,72 @@
+stages:
+  - test
+  - build
+  - deploy
+
+before_script:
+  - docker login -u "$NEXUS_USER" -p "$NEXUS_PASS" "$NEXUS_REG"
+
+test-backend:
+  stage: test
+  tags:
+    - wltdevopstest2.test
+  script:
+    - echo "🚀 Test started"
+    - docker build -t notes-backend-test -f backend/Dockerfile.test .
+    - docker run --rm -e NODE_ENV=test notes-backend-test
+  only:
+    - develop
+
+
+build-backend:
+  stage: build
+  tags:
+    - wltdevopstest2.test
+  script:
+    - docker build -t $SERVICE_NAME_BACKEND ./backend
+    - docker tag $SERVICE_NAME_BACKEND $NEXUS_REG/$SERVICE_NAME_BACKEND
+    - docker push $NEXUS_REG/$SERVICE_NAME_BACKEND
+  only:
+    - develop
+  environment:
+    name: develop
+
+build-frontend:
+  stage: build
+  tags:
+    - wltdevopstest2.test
+  script:
+    - docker build -t $SERVICE_NAME_FRONTEND ./frontend
+    - docker tag $SERVICE_NAME_FRONTEND $NEXUS_REG/$SERVICE_NAME_FRONTEND
+    - docker push $NEXUS_REG/$SERVICE_NAME_FRONTEND
+  only:
+    - develop
+  environment:
+    name: develop
+
+deploy:
+  stage: deploy
+  environment:
+    name: develop
+  tags:
+    - wltdevopstest2.test
+  only:
+    - develop
+  script:
+    - chmod 644 monitoring/prometheus.yml
+    - echo "🚀 Deploy started"
+
+    # останавливаем сервисы
+    - docker-compose down || true
+
+    # подтягиваем новые образы из Nexus
+    - docker-compose pull
+
+    # запускаем обновлённые контейнеры
+    - docker-compose up -d
+
+    # проверяем статус
+    - docker-compose ps
+
+    - echo "✅ Deploy finished"
+

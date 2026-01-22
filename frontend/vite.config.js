@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+<<<<<<< HEAD
 import path from 'path';
 
 export default defineConfig({
@@ -18,3 +19,12 @@ export default defineConfig({
   },
 });
 
+=======
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    outDir: 'dist'
+  }
+});
+>>>>>>> upstream/main

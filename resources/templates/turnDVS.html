@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <div style="text-align: center">
+    <h3>Очередь на ДВС</h3>
+    </div>
+    <hr/>
+    <table class="table table-bordered table-striped" id="myTable" border="3">
+        <tr>
+            <th>ИМЯ</th>
+            <th>ФАМИЛИЯ</th>
+            <th>ДАТА СОЗДАНИЯ ЗАЯВКИ</th>
+            <th>НАЧАЛО РАБОТЫ</th>
+            <th>КОНЕЦ РАБОТЫ</th>
+            <th>ОПИСАНИЕ</th>
+            <th>ЦЕНА</th>
+            <th>УСЛУГА</th>
+            <th>МАРКА</th>
+            <th>МОДЕЛЬ</th>
+            <th>СТАТУС</th>
+            <th>ACTION</th>
+        </tr>
+        <tr th:each="userTurn : ${turnDVS}">
+            <td th:text="${userTurn.notification.user.firstName}"></td>
+            <td th:text="${userTurn.notification.user.lastName}"></td>
+            <td th:text="${userTurn.notification.dateTime}"></td>
+            <td th:text="${userTurn.notification.dateFrom}"></td>
+            <td th:text="${userTurn.notification.dateBefore}"></td>
+            <td th:text="${userTurn.notification.description}"></td>
+            <td th:text="${userTurn.notification.price}"></td>
+            <td th:text="${userTurn.notification.faults}"></td>
+            <td th:text="${userTurn.notification.car.models.mark.name}"></td>
+            <td th:text="${userTurn.notification.car.models.name}"></td>
+            <td th:text="${userTurn.status}"></td>
+            <td>
+                <a th:href="@{save-application-DVS(turnId=${userTurn.id})}" class="btn btn-warning">Save</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <form th:action="@{/mainPage-turn}" method="post">
+        <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+    </form>
+</div>
+</body>
+</html>

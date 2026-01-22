@@ -1,0 +1,274 @@
+<style>
+    .vacancy-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .vacancy-card {
+        background-color: var(--tg-theme-secondary-bg-color, #f8f9fa);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        cursor: pointer;
+        position: relative;
+        overflow: visible;
+    }
+
+    .vacancy-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        border-color: var(--tg-theme-button-color, #40a7e3);
+    }
+
+    .vacancy-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--tg-theme-text-color, #000000);
+        line-height: 1.4;
+        padding-right: 40px;
+    }
+
+    .vacancy-salary {
+        font-size: 16px;
+        font-weight: 700;
+        color: #10b981;
+        margin-bottom: 8px;
+    }
+
+    .vacancy-location {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--tg-theme-hint-color, #666666);
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .vacancy-description {
+        color: var(--tg-theme-text-color, #000000);
+        margin-bottom: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .vacancy-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+    }
+
+    .meta-tag {
+        background: linear-gradient(135deg, var(--tg-theme-button-color, #40a7e3), #2d8ac7);
+        color: var(--tg-theme-button-text-color, #ffffff);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+    }
+
+    /* Меню трех точек */
+    .vacancy-menu {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+    .menu-toggle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: transparent;
+        border: none;
+    }
+
+    .menu-toggle:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: var(--tg-theme-hint-color, #666666);
+        position: relative;
+    }
+
+    .menu-dot::before,
+    .menu-dot::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: var(--tg-theme-hint-color, #666666);
+        left: 0;
+    }
+
+    .menu-dot::before {
+        top: -8px;
+    }
+
+    .menu-dot::after {
+        top: 8px;
+    }
+
+    .menu-dropdown {
+        position: absolute; /* теперь открывается у кнопки */
+        top: 36px;
+        right: 0;
+        background: var(--tg-theme-bg-color, #ffffff);
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        min-width: 150px;
+        z-index: 9999;
+        display: none;
+        border: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0);
+        padding: 4px 0;
+        z-index: 9999;
+
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .menu-dropdown.show {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .menu-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--tg-theme-text-color, #000000);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.2s;
+    }
+
+    .menu-item:hover {
+        background-color: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    }
+
+    .menu-item.statistics {
+        color: #3b82f6;
+    }
+
+    .menu-item.edit {
+        color: #f59e0b;
+    }
+
+    .menu-item.delete {
+        color: #ef4444;
+    }
+
+    .menu-icon {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<div class="vacancy-list">
+    {% for vacancy in vacancies %}
+    <div class="vacancy-card" data-vacancy-id="{{ vacancy.id }}">
+        <!-- Меню трех точек -->
+        <div class="vacancy-menu">
+            <button class="menu-toggle" onclick="toggleMenu(this)">
+                <span class="menu-dot"></span>
+            </button>
+            <div class="menu-dropdown">
+                <div class="menu-item statistics" onclick="showStatistics({{ vacancy.id }})">
+                    <span class="menu-icon">📊</span>
+                    Статистика
+                </div>
+                <div class="menu-item edit" onclick="editVacancy({{ vacancy.id }})">
+                    <span class="menu-icon">✏️</span>
+                    Редактировать
+                </div>
+                <div class="menu-item delete" onclick="deleteVacancy({{ vacancy.id }})">
+                    <span class="menu-icon">🗑️</span>
+                    Удалить
+                </div>
+            </div>
+        </div>
+
+        <h3 class="vacancy-title">{{ vacancy.title }}</h3>
+
+            <div class="vacancy-salary">
+                {% if vacancy.work_type != 'practice' %}
+                    💰 {{ vacancy.salary }} сом
+                {% else %}
+                    💰 Не <del>оплачиваемый</del> практика
+                {% endif %}
+            </div>
+
+            <div class="vacancy-location">
+                📍
+                {% if vacancy.is_remote %}
+                    Удаленная работа
+                {% else %}
+                    {% if vacancy.city %}{{ vacancy.city }}{% endif %}
+                    {% if vacancy.country and vacancy.city %}, {% endif %}
+                    {% if vacancy.country %}{{ vacancy.country }}{% endif %}
+                {% endif %}
+            </div>
+
+            <div class="vacancy-description">
+                {{ vacancy.description|truncatewords:30 }}
+            </div>
+
+            <div class="vacancy-meta">
+                <span class="meta-tag">{{ vacancy.get_work_type_display }}</span>
+                <span class="meta-tag">{{ vacancy.get_work_time_display }}</span>
+                {% if vacancy.is_remote %}
+                    <span class="meta-tag">🌐 Удаленно</span>
+                {% endif %}
+            </div>
+    </div>
+    {% empty %}
+    <div class="vacancy-card">
+        <h3 class="vacancy-title">Вакансии не найдены</h3>
+        <p>У вас пока нет активных вакансий</p>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+        function toggleMenu(button) {
+        const menu = button.nextElementSibling;
+        const allMenus = document.querySelectorAll('.menu-dropdown');
+        allMenus.forEach(m => m.classList.remove('show'));
+
+        if (!menu.classList.contains('show')) {
+            const rect = button.getBoundingClientRect();
+            menu.style.top = rect.bottom + 8 + "px";
+            menu.style.right = (window.innerWidth - rect.right) + "px";
+            menu.classList.add('show');
+        }
+}
+</script>
