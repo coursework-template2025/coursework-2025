@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="container">
+    </form>
+    <h3>Выполненные работы</h3>
+
+    <hr/>
+    <table class="table table-bordered table-striped" id="myTable" border="3">
+        <tr>
+            <th>DESCRIPTION</th>
+            <th>PRICE</th>
+            <th>FAULTS</th>
+            <th>MARK</th>
+            <th>MODEL</th>
+            <th>STATUS</th>
+            <th>COUNT</th>
+        </tr>
+        <tr th:each="workDone : ${turnDone}">
+
+            <td th:text="${workDone.notification.description}"></td>
+            <td th:text="${workDone.notification.price}"></td>
+            <td th:text="${workDone.notification.faults}"></td>
+            <td th:text="${workDone.notification.car.models.mark.name}"></td>
+            <td th:text="${workDone.notification.car.models.name}"></td>
+            <td th:text="${workDone.status}"></td>
+            <td th:text="${workDone.count}"></td>
+        </tr>
+    </table>
+    <form th:action="@{/mainPage-turn}" method="post">
+        <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+    </form>
+</div>
+</body>
+</html>

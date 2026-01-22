@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Notification</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <h3>Notification Table User</h3>
+    <hr/>
+
+    <table class="table table-bordered table-striped" id="myTable" border="3">
+        <tr>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            <th>DATE OF CREATION</th>
+            <th>DATE FROM</th>
+            <th>DATE BEFORE</th>
+            <th>DESCRIPTION</th>
+            <th>PRICE</th>
+            <th>FAULTS</th>
+            <th>MARK</th>
+            <th>MODEL</th>
+            <th>STATUS</th>
+        </tr>
+        <tr th:each="notification : ${notifications}">
+            <td th:text="${notification.user.firstName}"></td>
+            <td th:text="${notification.user.lastName}"></td>
+            <td th:text="${notification.dateTime}"></td>
+            <td th:text="${notification.dateFrom}"></td>
+            <td th:text="${notification.dateBefore}"></td>
+            <td th:text="${notification.description}"></td>
+            <td th:text="${notification.price}"></td>
+            <td th:text="${notification.faults}"></td>
+            <td th:text="${notification.mark}"></td>
+            <td th:text="${notification.model}"></td>
+            <td th:text="${notification.status}"></td>
+        </tr>
+    </table>
+    <br>
+    <form th:action="@{/mainPage-note}" method="post">
+        <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+    </form>
+</div>
+</body>
+</html>

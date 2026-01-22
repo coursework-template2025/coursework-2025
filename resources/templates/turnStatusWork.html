@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Turn Working</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <h3>Записи в работе</h3>
+    <hr/>
+    <table class="table table-bordered table-striped" id="myTable" border="3">
+        <tr>
+            <th>ID</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            <th>DATE OF CREATION</th>
+            <th>DATE FROM</th>
+            <th>DATE BEFORE</th>
+            <th>DESCRIPTION</th>
+            <th>PRICE</th>
+            <th>FAULTS</th>
+            <th>MARK</th>
+            <th>MODEL</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+        </tr>
+        <tr th:each="carTurn : ${turnStatusWorking}">
+            <td th:text="${carTurn.id}"></td>
+            <td th:text="${carTurn.notification.user.firstName}"></td>
+            <td th:text="${carTurn.notification.user.lastName}"></td>
+            <td th:text="${carTurn.notification.dateTime}"></td>
+            <td th:text="${carTurn.notification.dateFrom}"></td>
+            <td th:text="${carTurn.notification.dateBefore}"></td>
+            <td th:text="${carTurn.notification.description}"></td>
+            <td th:text="${carTurn.notification.price}"></td>
+            <td th:text="${carTurn.notification.faults}"></td>
+            <td th:text="${carTurn.notification.mark}"></td>
+            <td th:text="${carTurn.notification.model}"></td>
+            <td th:text="${carTurn.status}"></td>
+            <input hidden="hidden" type="email" th:value="${carTurn.notification.user.getEmail()}" name="email">
+            <td>
+                <a th:href="@{/done(turnId=${carTurn.id})}" class="btn btn-success">Done</a>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <form th:action="@{/mainPage-turn}" method="post">
+        <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+    </form>
+</div>
+</body>
+</html>

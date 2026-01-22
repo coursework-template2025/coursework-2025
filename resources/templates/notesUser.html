@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>My notes</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <h3>Записи под вопросом</h3>
+    <hr/>
+    <table class="table table-bordered table-striped" id="myTable" border="3">
+        <tr>
+            <th>ID</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            <th>DATE OF CREATION</th>
+            <th>DATE FROM</th>
+            <th>DATE BEFORE</th>
+            <th>DESCRIPTION</th>
+            <th>PRICE</th>
+            <th>FAULTS</th>
+            <th>MARK</th>
+            <th>MODEL</th>
+            <th>STATUS</th>
+            <th>AGREE</th>
+            <th>DENIED</th>
+        </tr>
+        <tr th:each="noteUser : ${notesUser}">
+            <td th:text="${noteUser.id}"></td>
+            <td th:text="${noteUser.user.firstName}"></td>
+            <td th:text="${noteUser.user.lastName}"></td>
+            <td th:text="${noteUser.dateTime}"></td>
+            <td th:text="${noteUser.dateFrom}"></td>
+            <td th:text="${noteUser.dateBefore}"></td>
+            <td th:text="${noteUser.description}"></td>
+            <td th:text="${noteUser.price}"></td>
+            <td th:text="${noteUser.faults}"></td>
+            <td th:text="${noteUser.mark}"></td>
+            <td th:text="${noteUser.model}"></td>
+            <td th:text="${noteUser.status}"></td>
+            <td><a class="btn-sm btn-success btn-space" th:href="@{/agree/(notificationId=${noteUser.id})}"
+                   role="button">Agree</a></td>
+            <td><a class="btn-sm btn-danger btn-space" th:href="@{/denied/(notificationId=${noteUser.id})}"
+                   role="button">Denied</a></td>
+        </tr>
+    </table>
+    <br>
+    <form th:action="@{/mainPage-note}" method="post">
+        <input type="submit" value="Return Main Page" class="btn btn-primary btn-lg">
+    </form>
+</div>
+</body>
+</html>
