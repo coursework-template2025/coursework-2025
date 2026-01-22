@@ -1,0 +1,342 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}Вакансии{% endblock %}</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.0/lottie.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            line-height: 1.6;
+            padding-bottom: 80px;
+            margin-top: 70px;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .duck-animation {
+            width:150px; height:150px;
+        }
+
+        .emoji-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0);
+        }
+
+        .header h1 {
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        /* Нижнее меню */
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--tg-theme-bg-color, #ffffff);
+            border-top: 1px solid var(--tg-theme-secondary-bg-color, #f0f0f0);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-around;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            min-width: 60px;
+            text-decoration: none;
+        }
+
+        .menu-item.active {
+            background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+        }
+
+        .menu-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        .menu-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .menu-item.active .menu-text {
+            color: var(--tg-theme-button-color, #40a7e3);
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--tg-theme-hint-color, #666666);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--tg-theme-hint-color, #666666);
+        }
+
+        .no-results h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body id="main-header">
+    {% block content %}
+        <div class="header">
+            <h1>🔍 Доступные вакансии</h1>
+        </div>
+
+        <div class="emoji-container">
+            <div id="duck-animation" class="duck-animation"></div>
+        </div>
+        <div class="search-container">
+            <input
+                type="text"
+                id="search-input"
+                class="search-input"
+                placeholder="Поиск вакансий..."
+                oninput="debouncedSearch()"
+                onkeydown="if(event.key==='Enter'){this.blur(); debouncedSearch();}"
+            >
+            <div class="search-icon">🔍</div>
+        </div>
+
+        <div id="vacancy-container">
+            {% include "miniapp/partials/vacancy_list.html" %}
+        </div>
+
+        <div id="loading" style="display:none; text-align:center; margin:20px;">Загрузка...</div>
+
+        <style>
+    .search-container {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 16px 48px 16px 16px;
+        border: 2px solid var(--tg-theme-secondary-bg-color, #f0f0f0);
+        border-radius: 16px;
+        background-color: var(--tg-theme-bg-color, #ffffff);
+        color: var(--tg-theme-text-color, #000000);
+        font-size: 16px;
+        font-family: 'Inter', sans-serif;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--tg-theme-button-color, #40a7e3);
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--tg-theme-hint-color, #999999);
+    }
+
+
+</style>
+
+<div id="vacancy-container"></div>
+<div id="loading" style="display:none; text-align:center; margin:20px;">Загрузка...</div>
+
+<script>
+let currentPage = 1;
+let isLoading = false;
+let searchQuery = '';
+let debounceTimer;
+
+// Функция поиска с дебаунсом
+function debouncedSearch() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        searchQuery = document.getElementById('search-input')?.value || '';
+        currentPage = 1;
+        document.getElementById('vacancy-container').innerHTML = ''; // очищаем контейнер
+        loadVacancies(); // загружаем первую страницу поиска
+    }, 500);
+}
+
+// Основная функция загрузки вакансий
+async function loadVacancies() {
+    if (isLoading) return;
+    isLoading = true;
+    document.getElementById('loading').style.display = 'block';
+
+    const params = new URLSearchParams({ page: currentPage });
+    if (searchQuery) params.set('q', searchQuery);
+
+    try {
+        const response = await fetch(`?${params}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (!response.ok) throw new Error('Ошибка загрузки');
+
+        const data = await response.json();
+        const container = document.getElementById('vacancy-container');
+
+        // Ищем flex-контейнер .vacancy-list
+        let vacancyList = container.querySelector('.vacancy-list');
+
+        if (!vacancyList) {
+            // Первая загрузка или новый поиск — вставляем HTML полностью
+            container.innerHTML = data.html;
+        } else {
+            // Остальные страницы — добавляем только новые карточки
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data.html;
+            const newCards = tempDiv.querySelectorAll('.vacancy-card');
+
+            // Проверяем ID карточек, чтобы избежать дубликатов
+            const existingIds = new Set(
+                Array.from(vacancyList.querySelectorAll('.vacancy-card')).map(c => c.dataset.vacancyId)
+            );
+
+            newCards.forEach(card => {
+                if (!existingIds.has(card.dataset.vacancyId)) {
+                    vacancyList.appendChild(card);
+                }
+            });
+        }
+
+        if (data.has_next) {
+            currentPage++;
+        }
+    } catch (err) {
+        console.error('Error:', err);
+    } finally {
+        isLoading = false;
+        document.getElementById('loading').style.display = 'none';
+    }
+}
+
+// Клик по карточке вакансии
+document.addEventListener('click', (e) => {
+    const card = e.target.closest('.vacancy-card');
+    if (!card) return;
+    const vacancyId = card.dataset.vacancyId;
+    const tgId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+
+    // Добавляем tg_id в URL, если есть
+    let url = `/miniapp/vacancies/${vacancyId}/`;
+    if (tgId) url += `?tg_id=${tgId}`;
+
+    window.location.href = url;
+});
+
+// Автозагрузка при скролле
+window.addEventListener('scroll', () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+        loadVacancies();
+    }
+});
+
+// Запуск при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadVacancies);
+</script>
+
+
+    {% endblock %}
+
+    {% url 'miniapp:main' as main_url %}
+    {% url 'miniapp:filter' as filter_url %}
+    {% url 'miniapp:profile' as profile_url %}
+    {% url 'miniapp:favorite_vacancies' as favorite_vacancies %}
+
+    <!-- Нижнее меню -->
+    <div class="bottom-menu">
+        <a href="{% if request.path == main_url %}#main-header{% else %}{{ main_url }}{% endif %}" class="menu-item {% if request.path == main_url %}active{% endif %}">
+            <div class="menu-icon">🏠</div>
+            <div class="menu-text">Главная</div>
+        </a>
+        <a href="{% if request.path == filter_url %}#filter-header{% else %}{{ filter_url }}{% endif %}" class="menu-item {% if request.path == filter_url %}active{% endif %}">
+            <div class="menu-icon">🔧</div>
+            <div class="menu-text">Фильтр</div>
+        </a>
+
+        <a href="{% if request.path == favorite_vacancies %}#favorite-header{% else %}{{ favorite_vacancies }}{% endif %}" class="menu-item {% if request.path == favorite_vacancies %}active{% endif %}">
+            <div class="menu-icon">💖</div>
+            <div class="menu-text">Избранное</div>
+        </a>
+
+        <a href="{{ profile_url }}" class="menu-item {% if request.path == profile_url %}active disabled{% endif %}"
+           {% if request.path == profile_url %}onclick="return false;"{% endif %}>
+            <div class="menu-icon">👤</div>
+            <div class="menu-text">Профиль</div>
+        </a>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.enableClosingConfirmation();
+
+        // CSRF токен для Django
+        function getCSRFToken() {
+            const cookieValue = document.cookie.match('(^|;)\\s*csrftoken\\s*=\\s*([^;]+)');
+            return cookieValue ? cookieValue.pop() : '';
+        }
+    </script>
+
+    <script>
+        {# FOR EMOJIES#}
+        var animation = lottie.loadAnimation({
+            container: document.getElementById('duck-animation'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '{% static 'miniapp/emoji/104_PHONE_OUT.json' %}'
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

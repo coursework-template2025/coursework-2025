@@ -1,0 +1,356 @@
+{% extends 'main/main.html' %}
+{% load i18n %}
+{% block content %}
+
+    <style>
+      @media (max-width: 576px) {
+    .modal-md {
+        max-width: 90%;
+    }
+  }
+  .modal-content {
+    border-radius: 0.75rem;
+  }
+  .btn-rounded {
+    border-radius: 50px;
+  }
+
+  .favorite-btn {
+    transition: all 0.2s ease-in-out;
+    }
+    .favorite-btn.active {
+        color: green;
+    }
+    </style>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Основной контент -->
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-sm position-relative">
+                <!-- Три точки -->
+                <div class="dropdown position-absolute top-0 end-0 m-3">
+                    <button class="btn btn-sm btn-light rounded-circle" type="button" id="vacancyMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="vacancyMenuButton">
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="#" class="dropdown-item favorite-btn" data-id="{{ vacancy.id }}">
+                                <i class="bi {% if request.user in vacancy.favorite_by.all %}bi-heart-fill{% else %}bi-heart{% endif %} me-2"></i>
+                                {% trans "Избранное" %}
+                            </a>
+                        </li>
+                    {% endif %}
+
+                        <li><a class="dropdown-item" href="{% url 'userauth:public_profile' vacancy.user.pk %}">
+                            <i class="bi bi-person me-2"></i>{% trans "Посмотреть профиль" %}
+                        </a></li>
+                        {% if vacancy.user.id == request.user.id %}
+                            <li><a class="dropdown-item" href="{% url 'api:vacancy_update' vacancy.id %}">
+                                <i class="bi bi-person me-2"></i>{% trans "Редактировать" %}
+                            </a></li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="#"
+                               data-bs-toggle="modal"
+                               data-bs-target="#complaintModal">
+                                <i class="bi bi-flag me-2"></i>{% trans "Отправить жалобу" %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h1 class="card-title fw-bold text-dark mb-2">{{ vacancy.title }}</h1>
+                            {% if not vacancy.work_type == 'practice' %}
+                                <h4 class="text-primary fw-bold mb-3">{{ vacancy.salary }} {% trans "сом" %}</h4>
+                            {% else %}
+                                <h4 class="text-primary fw-bold md-3">{% trans 'Не оплачиваемый практика' %}</h4>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <span class="badge bg-primary bg-opacity-10 text-primary fs-6 py-2">
+                            <i class="bi bi-briefcase me-1"></i>{{ vacancy.get_work_type_display }}
+                        </span>
+                        {% if vacancy.is_remote %}
+                            <span class="badge bg-success bg-opacity-10 text-success fs-6 py-2">
+                                <i class="bi bi-laptop me-1"></i>{% trans "Удалённая работа" %}
+                            </span>
+                        {% else %}
+                            <span class="badge bg-info bg-opacity-10 text-info fs-6 py-2">
+                                <i class="bi bi-geo-alt me-1"></i>
+                                {{ vacancy.city }}{% if vacancy.country %}, {{ vacancy.country }}{% endif %}
+                            </span>
+                        {% endif %}
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary fs-6 py-2">
+                            <i class="bi bi-clock me-1"></i>{{ vacancy.get_work_time_display }}
+                        </span>
+                    </div>
+
+                    <div class="vacancy-section mb-4">
+                        <h4 class="section-title"><i class="bi bi-person me-2"></i>{% trans "Автор" %}</h4>
+                        <p class="md-4">{{ vacancy.user.username }}</p>
+                    </div>
+
+                    <div class="vacancy-section mb-4">
+                        <h4 class="section-title"><i class="bi bi-buildings"></i> {% trans "О компании" %}</h4>
+                        <p class="mb-4">{{ vacancy.about_me }}</p>
+                    </div>
+
+                    <div class="vacancy-section mb-4">
+                        <h4 class="section-title"><i class="bi bi-file-text me-2"></i>{% trans "Описание вакансии" %}</h4>
+                        <p class="mb-4">{{ vacancy.description }}</p>
+                    </div>
+
+                    <div class="vacancy-section mb-4">
+                        <h4 class="section-title"><i class="bi bi-list-check me-2"></i>{% trans "Требования" %}</h4>
+                        <p class="mb-4">{{ vacancy.requirements }}</p>
+                    </div>
+
+                    <div class="vacancy-section mb-4">
+                        <h4 class="section-title"><i class="bi bi-card-checklist me-2"></i>{% trans "Обязанности" %}</h4>
+                        <p class="mb-4">{{ vacancy.responsibilities }}</p>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    {% if user.is_authenticated %}
+                        {% if not user.user_r %}
+                          {% if has_responded %}
+                            <button class="btn btn-secondary me-md-2 rounded-pill" disabled>
+                                <i class="bi bi-check-circle me-1"></i>{% trans "Вы уже откликнулись" %}
+                            </button>
+                          {% else %}
+                            <button class="btn btn-primary me-md-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#respondModal">
+                                <i class="bi bi-send me-1"></i>{% trans "Откликнуться" %}
+                            </button>
+                          {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'auth' %}?next={{ request.path }}" class="btn btn-secondary me-md-2 rounded-pill">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>{% trans "Сперва войди в аккаунт" %}
+                        </a>
+                    {% endif %}
+                    <a href="{{ request.META.HTTP_REFERER|default:'/profile' }}" class="btn btn-secondary">{% trans "Назад" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Похожие вакансии -->
+    {% if similar_vacancies %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4"><i class="bi bi-stars me-2"></i>{% trans "Похожие вакансии" %}</h3>
+        </div>
+        {% for related in similar_vacancies %}
+            <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter0|add:1 1 100 %}">
+                <div class="card vacancy-card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-dark">{{ related.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-primary fw-semibold">
+                            <i class="bi bi-currency-exchange me-1"></i>
+                            {% if not related.work_type == 'practice' %}
+                                {% blocktrans with salary=related.salary %}До {{ salary }} сом{% endblocktrans %}
+                            {% else %}
+                                {% trans 'Не оплачиваемый практика' %}
+                            {% endif %}
+                        </h6>
+                        <p class="card-text text-muted">{{ related.description|truncatechars:100 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge
+                                {% if related.is_remote %}bg-info
+                                {% elif related.work_time == 'По выходным' %}bg-dark
+                                {% else %}bg-success{% endif %} rounded-pill">
+                                {% if related.is_remote %}<i class="bi bi-laptop me-1"></i>{% trans "Удалённо" %}
+                                {% else %}<i class="bi bi-building me-1"></i>{{ related.work_time }}{% endif %}
+                            </span>
+                            <a href="{% url 'api:vacancy_detail' related.id %}" class="btn btn-sm btn-outline-primary rounded-pill">
+                                {% trans "Подробнее" %} <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <small class="text-muted">
+                            <i class="bi bi-geo-alt me-1"></i>
+                            {% if related.city %}{{ related.city }}{% endif %}
+                            {% if related.country and related.city %}, {% endif %}
+                            {% if related.country %}{{ related.country }}{% endif %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="respondModal" tabindex="-1" aria-labelledby="respondModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <form method="post" action="{% url 'api:respond_to_vacancy' vacancy.id %}">
+        {% csrf_token %}
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="respondModalLabel">
+            <i class="bi bi-send me-2"></i>{% trans "Отклик на вакансию" %}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans "Закрыть" %}"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="anketa" class="form-label fw-semibold">{% trans "Выберите анкету" %}:</label>
+            <select name="anketa" id="anketa" class="form-select" required>
+              {% for anketa in ankets %}
+                <option value="{{ anketa.id }}">{{ anketa.title }}</option>
+              {% empty %}
+                <option disabled>{% trans "Нет активных анкет" %}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="submit" class="btn btn-primary rounded-pill">
+            <i class="bi bi-send me-1"></i>{% trans "Отправить отклик" %}
+          </button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">
+            <i class="bi bi-x me-1"></i>{% trans "Отмена" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+    .section-title {
+        color: #495057;
+        border-bottom: 2px solid #6366f1;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .vacancy-section {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .vacancy-section:last-child {
+        border-bottom: none;
+    }
+
+    .badge {
+        font-weight: 500;
+        padding: 0.5rem 0.75rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Инициализация AOS для анимаций
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+        }
+    });
+</script>
+
+    <!-- Модальное окно -->
+<div class="modal fade" id="complaintModal" tabindex="-1" aria-labelledby="complaintModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content border-0 shadow-sm">
+      <form method="POST" action="{% url 'api:vacancy_complaint' vacancy.id %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="complaintModalLabel">{% trans "Жалоба на вакансию" %}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% trans "Закрыть" %}"></button>
+        </div>
+        <div class="modal-body">
+          {% if not request.user.is_authenticated %}
+          <div class="mb-3">
+            <label for="anon_name" class="form-label">{% trans "Ваше имя" %}</label>
+            <input type="text" class="form-control" id="anon_name" name="anon_name" placeholder="{% trans 'Имя или Ник' %}">
+          </div>
+          <div class="mb-3">
+            <label for="anon_email" class="form-label">{% trans "Ваш Email" %}</label>
+            <input type="email" class="form-control" id="anon_email" name="anon_email" placeholder="{% trans 'Email для связи' %}">
+          </div>
+          {% endif %}
+          <div class="mb-3">
+            <label for="reason" class="form-label">{% trans "Причина жалобы" %}</label>
+            <textarea class="form-control" id="reason" name="reason" rows="4" required placeholder="{% trans 'Опишите проблему...' %}"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">
+            &times; {% trans "Отмена" %}
+          </button>
+          <button type="submit" class="btn btn-danger rounded-pill">
+            {% trans "Отправить жалобу" %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const favButtons = document.querySelectorAll(".favorite-btn");
+    const csrftokenInput = document.querySelector('[name=csrfmiddlewaretoken]');
+    const csrftoken = csrftokenInput ? csrftokenInput.value : null;
+
+    favButtons.forEach(button => {
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            const vacancyId = this.dataset.id;
+            const icon = this.querySelector("i");
+
+            fetch(`/vacancy/${vacancyId}/favorite/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                credentials: "same-origin"
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.is_favorite) {
+                    icon.classList.remove("bi-heart");
+                    icon.classList.add("bi-heart-fill");
+                    icon.style.color = "green";
+                    icon.style.transform = "scale(1.3)";
+                    setTimeout(() => icon.style.transform = "scale(1)", 200);
+                } else {
+                    icon.classList.remove("bi-heart-fill");
+                    icon.classList.add("bi-heart");
+                    icon.style.color = "";
+                }
+            })
+            .catch(err => console.error("Ошибка избранного:", err));
+        });
+    });
+});
+</script>
+
+{% endblock %}
