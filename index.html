@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Планировщик поездок</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80')
+        no-repeat center center fixed;
+      background-size: cover;
+      color: rgb(218, 115, 156);
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    .box {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      color: white;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .btn-auth {
+      flex: 1 1 45%;
+      min-width: 120px;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      background-color: pink;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-auth:hover {
+      background-color: #e55ca9;
+    }
+
+    button {
+      background-color: pink;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e55ca9;
+    }
+
+    .trip {
+      background: pink;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .trip button {
+      display: block;
+      margin: 10px auto 0 auto;
+      background-color: #f8bbd0;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 12px;
+      font-size: 1em;
+      color: white;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .trip button:hover {
+      background-color: #d17fa9;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    #auth-box {
+      max-width: 600px;
+      margin: 30px auto;
+    }
+
+    /* Новая флекс-обёртка для формы и карты */
+    .content {
+      display: flex;
+      max-width: 1000px;
+      margin: 30px auto;
+      gap: 20px;
+      color: white;
+    }
+
+    /* Левая часть: форма и список поездок */
+    #trip-box {
+      flex: 1 1 600px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Обёртка для формы и списка внутри trip-box */
+    .trip-form {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #trip-list {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 15px;
+      max-height: 350px;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Правая часть: карта */
+    #map {
+      flex: 1 1 350px;
+      height: auto;
+      min-height: 500px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Адаптив для мобильных */
+    @media (max-width: 900px) {
+      .content {
+        flex-direction: column;
+      }
+      #map {
+        min-height: 300px;
+        margin-top: 20px;
+      }
+      #trip-box {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Планировщик поездок</h1>
+
+  <div class="box" id="auth-box">
+    <h2>Регистрация / Вход</h2>
+    <input type="text" id="username" placeholder="Имя пользователя" />
+    <input type="password" id="password" placeholder="Пароль" />
+    <div class="btn-row">
+      <button class="btn-auth" onclick="register()">Зарегистрироваться</button>
+      <button class="btn-auth" onclick="login()">Войти</button>
+    </div>
+  </div>
+
+  <div class="content" style="display:none" id="trip-content">
+    <div id="trip-box">
+      <div class="trip-form">
+        <h2 id="greeting">Добавить поездку</h2>
+        <input type="text" id="destination" placeholder="Куда" />
+        <input type="date" id="date" />
+        <textarea id="notes" placeholder="Заметки"></textarea>
+        <div class="center">
+          <button onclick="addTrip()">Сохранить</button>
+        </div>
+      </div>
+
+      <h2 style="text-align:center;">Мои поездки</h2>
+      <div id="trip-list"></div>
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" defer></script>
+  <script>
+    let currentUser = '';
+    let map;
+    let markers = [];
+
+    function register() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) return alert('Введите имя и пароль');
+
+      fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+        .then((res) => res.json())
+        .then((data) => alert(data.message || 'Регистрация успешна'))
+        .catch(() => alert('Ошибка при регистрации'));
+    }
+
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) return alert('Введите имя и пароль');
+
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            currentUser = data.username;
+            document.getElementById('auth-box').style.display = 'none';
+            document.getElementById('trip-content').style.display = 'flex';
+            document.getElementById(
+              'greeting'
+            ).textContent = `Куда поедем, ${currentUser}?`;
+            initMap();
+            loadTrips();
+          } else {
+            alert(data.message || 'Ошибка входа');
+          }
+        })
+        .catch(() => alert('Ошибка при входе'));
+    }
+
+    function addTrip() {
+  const destination = document.getElementById('destination').value.trim();
+  const date = document.getElementById('date').value;
+  const notes = document.getElementById('notes').value.trim();
+
+  if (!destination || !date) {
+    return alert('Заполните поле "Куда" и выберите дату');
+  }
+
+  fetch('http://localhost:3000/trips', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user: currentUser, destination, date, notes }),
+  })
+    .then((res) => res.json())
+    .then((newTrip) => {
+      clearForm();
+      loadTrips();
+      // Можно добавить плавный переход и маркер для только что добавленной поездки
+      addMarker(destination, true);
+    })
+    .catch(() => alert('Ошибка при добавлении поездки'));
+}
+
+
+    function loadTrips() {
+      fetch(`http://localhost:3000/trips/${currentUser}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const list = document.getElementById('trip-list');
+          list.innerHTML = '';
+
+          // Очистка маркеров с карты
+          markers.forEach((m) => map.removeLayer(m));
+          markers = [];
+
+          data.forEach((trip) => {
+            const div = document.createElement('div');
+            div.className = 'trip';
+            div.innerHTML = `
+              <strong>${trip.destination}</strong> — ${trip.date}<br/>
+              ${trip.notes}<br/>
+              <button onclick="deleteTrip('${trip._id}')">Удалить</button>
+            `;
+            list.appendChild(div);
+
+            // Добавление маркера для каждой поездки
+            addMarker(trip.destination, false);
+          });
+        })
+        .catch(() => alert('Ошибка при загрузке поездок'));
+    }
+
+    function deleteTrip(id) {
+      fetch(`http://localhost:3000/trips/${id}`, {
+        method: 'DELETE',
+      })
+        .then(() => loadTrips())
+        .catch(() => alert('Ошибка при удалении поездки'));
+    }
+
+    function initMap() {
+      if (map) return; // Инициализация один раз
+      map = L.map('map').setView([42.87, 74.59], 6); // Центр: Бишкек
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map);
+    }
+
+    function addMarker(destination, flyTo = true) {
+      fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          destination
+        )}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length > 0) {
+            const { lat, lon } = data[0];
+            const marker = L.marker([lat, lon])
+              .addTo(map)
+              .bindPopup(destination);
+            markers.push(marker);
+            if (flyTo) {
+              marker.openPopup();
+              map.setView([lat, lon], 10);
+            }
+          } else {
+            if (flyTo) alert('Место не найдено на карте');
+          }
+        })
+        .catch(() => {
+          if (flyTo) alert('Ошибка при поиске места на карте');
+        });
+    }
+
+    function clearForm() {
+      document.getElementById('destination').value = '';
+      document.getElementById('date').value = '';
+      document.getElementById('notes').value = '';
+    }
+  </script>
+</body>
+</html>
