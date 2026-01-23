@@ -1,4 +1,4 @@
-**/.env/**
+.env
 __Scripts__/
 .idea
 .vscode
@@ -20,14 +20,5 @@ venv
 venv/
 media/
 nginx.conf
+celerybeat-schedule
 logs/
-node_modules
-dist
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env
-.DS_Store
-*.log
-
